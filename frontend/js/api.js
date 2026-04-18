@@ -6,7 +6,7 @@
 // Automatically use the current hostname if deployed, otherwise fallback to local backend for testing
 const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 // IMPORTANT: Replace this placeholder with your actual Render URL later!
-const RENDER_BACKEND_URL = 'https://your-automech-backend-url.onrender.com';
+const RENDER_BACKEND_URL = 'https://nova-backend-ftga.onrender.com';
 const API_BASE = isLocalhost ? 'http://localhost:8000/api' : `${RENDER_BACKEND_URL}/api`;
 
 
