@@ -1,0 +1,161 @@
+part_id,part_name,category,current_stock,min_stock_level,unit_price,last_restocked,location_in_garage
+P-001,Connecting Rod Bearing Set,Engine,2,3,1200,2025-01-01,Rack-ENG
+P-002,Oil Pan Gasket,Engine,7,5,350,2025-01-01,Rack-ENG
+P-003,Piston Ring Set,Engine,5,2,2500,2025-01-01,Rack-ENG
+P-004,Cylinder Honing Service,Engine,1,0,3000,2026-04-18,Rack-ENG
+P-005,Head Gasket,Engine,7,3,800,2025-01-01,Rack-ENG
+P-006,Cylinder Head Bolt Set,Engine,6,2,600,2025-01-01,Rack-ENG
+P-007,Vacuum Hose Kit,Engine,4,5,400,2025-01-01,Rack-ENG
+P-008,Starter Motor Assembly,Engine,1,2,3500,2025-01-01,Rack-ENG
+P-009,Fuel Pump Assembly,Fuel,7,2,4500,2025-01-01,Rack-FUE
+P-010,Ignition Coil Pack,Engine,3,3,1800,2025-01-01,Rack-ENG
+P-011,Spark Plug Set (4pc),Engine,8,5,800,2025-01-01,Rack-ENG
+P-012,Thermostat,Cooling,9,4,600,2025-01-01,Rack-COO
+P-013,Timing Chain Kit,Engine,4,2,3500,2025-01-01,Rack-ENG
+P-014,Timing Chain Tensioner,Engine,5,3,1200,2025-01-01,Rack-ENG
+P-015,Valve Cover Gasket,Engine,6,5,450,2025-01-01,Rack-ENG
+P-016,Hydraulic Lifter Set,Engine,2,2,2800,2025-01-01,Rack-ENG
+P-017,Serpentine Belt,Engine,7,4,650,2025-01-01,Rack-ENG
+P-018,Air Filter,Engine,13,10,250,2025-01-01,Rack-ENG
+P-019,Engine Mount Front,Engine,6,3,1200,2025-01-01,Rack-ENG
+P-020,Engine Mount Rear,Engine,5,3,1000,2025-01-01,Rack-ENG
+P-021,Crankshaft Position Sensor,Engine,5,3,1500,2025-01-01,Rack-ENG
+P-022,Fuel Injector,Fuel,7,4,2000,2025-01-01,Rack-FUE
+P-023,Turbocharger Assembly,Engine,6,1,18000,2025-01-01,Rack-ENG
+P-024,Idle Air Control Valve,Engine,5,2,1800,2025-01-01,Rack-ENG
+P-025,Oil Pump Assembly,Engine,3,1,3500,2025-01-01,Rack-ENG
+P-026,Glow Plug Set (4pc),Engine,8,3,1200,2025-01-01,Rack-ENG
+P-027,Alternator Assembly,Electrical,7,2,4500,2025-01-01,Rack-ELE
+P-028,Water Pump,Cooling,6,3,2000,2025-01-01,Rack-COO
+P-029,Water Pump Gasket,Cooling,9,5,150,2025-01-01,Rack-COO
+P-030,EGR Valve,Exhaust,6,2,3500,2025-01-01,Rack-EXH
+P-031,VVT Solenoid,Engine,5,2,2200,2025-01-01,Rack-ENG
+P-032,Clutch Disc,Transmission,7,3,1800,2025-01-01,Rack-TRA
+P-033,Pressure Plate,Transmission,3,2,2200,2025-01-01,Rack-TRA
+P-034,Release Bearing,Transmission,5,3,800,2025-01-01,Rack-TRA
+P-035,Clutch Cable,Transmission,8,5,350,2025-01-01,Rack-TRA
+P-036,Synchronizer Ring Set,Transmission,0,1,3500,2025-01-01,Rack-TRA
+P-037,Gear Fork,Transmission,3,1,2500,2025-01-01,Rack-TRA
+P-038,Flywheel,Transmission,6,1,4000,2025-01-01,Rack-TRA
+P-039,Gearbox Oil Seal,Transmission,8,5,350,2025-01-01,Rack-TRA
+P-040,ATF Fluid (1L),Transmission,9,5,600,2025-01-01,Rack-TRA
+P-041,CVT Fluid (1L),Transmission,3,3,900,2025-01-01,Rack-TRA
+P-042,Differential Bearing Set,Transmission,3,2,2500,2025-01-01,Rack-TRA
+P-043,Universal Joint,Transmission,4,4,800,2025-01-01,Rack-TRA
+P-044,Reverse Idler Gear,Transmission,0,1,1800,2025-01-01,Rack-TRA
+P-045,Clutch Master Cylinder,Transmission,4,2,2000,2025-01-01,Rack-TRA
+P-046,Front Brake Pad Set,Brakes,8,5,1200,2025-01-01,Rack-BRA
+P-047,Rear Brake Pad Set,Brakes,4,5,1000,2025-01-01,Rack-BRA
+P-048,Brake Disc Front,Brakes,6,3,1800,2025-01-01,Rack-BRA
+P-049,Brake Master Cylinder,Brakes,4,2,2500,2025-01-01,Rack-BRA
+P-050,Brake Fluid DOT4 (500ml),Brakes,8,8,250,2025-01-01,Rack-BRA
+P-051,Brake Caliper Assembly,Brakes,7,2,3500,2025-01-01,Rack-BRA
+P-052,ABS Wheel Speed Sensor,Brakes,8,3,2000,2025-01-01,Rack-BRA
+P-053,Rear Wheel Cylinder,Brakes,8,3,600,2025-01-01,Rack-BRA
+P-054,Handbrake Cable,Brakes,6,3,500,2025-01-01,Rack-BRA
+P-055,Rear Brake Shoe Set,Brakes,4,4,800,2025-01-01,Rack-BRA
+P-056,Brake Hose Flexible,Brakes,3,4,400,2025-01-01,Rack-BRA
+P-057,Car Battery 12V 45Ah,Electrical,7,3,5000,2025-01-01,Rack-ELE
+P-058,Alternator Assembly Reco,Electrical,6,2,4000,2025-01-01,Rack-ELE
+P-059,Window Regulator Assembly,Body,6,2,2500,2025-01-01,Rack-BOD
+P-060,Door Lock Actuator,Body,5,3,1200,2025-01-01,Rack-BOD
+P-061,Electrical Wire Roll 10m,Electrical,5,5,300,2025-01-01,Rack-ELE
+P-062,Instrument Cluster Repair,Electrical,0,0,3000,2025-01-01,Rack-ELE
+P-063,Wiper Motor Assembly,Body,3,2,1800,2025-01-01,Rack-BOD
+P-064,Horn Assembly,Electrical,3,4,400,2025-01-01,Rack-ELE
+P-065,Immobilizer Key Transponder,Electrical,3,1,3000,2025-01-01,Rack-ELE
+P-066,Oxygen Sensor,Electrical,6,3,2000,2025-01-01,Rack-ELE
+P-067,MAF Sensor,Electrical,4,2,3000,2025-01-01,Rack-ELE
+P-068,Camshaft Position Sensor,Electrical,5,3,1500,2025-01-01,Rack-ELE
+P-069,Tail Lamp Bulb Set,Electrical,12,10,150,2025-01-01,Rack-ELE
+P-070,Front Shock Absorber,Suspension,3,4,2500,2025-01-01,Rack-SUS
+P-071,Rear Shock Absorber,Suspension,6,4,2000,2025-01-01,Rack-SUS
+P-072,Ball Joint Lower,Suspension,7,4,800,2025-01-01,Rack-SUS
+P-073,Wheel Bearing and Hub,Suspension,4,3,1800,2025-01-01,Rack-SUS
+P-074,Suspension Bush Kit,Suspension,4,4,600,2025-01-01,Rack-SUS
+P-075,Front Coil Spring,Suspension,5,2,1800,2025-01-01,Rack-SUS
+P-076,Strut Top Mount,Suspension,2,3,1200,2025-01-01,Rack-SUS
+P-077,Anti Roll Bar Link,Suspension,8,4,600,2025-01-01,Rack-SUS
+P-078,Rear Coil Spring,Suspension,1,2,1500,2025-01-01,Rack-SUS
+P-079,Radiator Assembly,Cooling,3,2,5000,2025-01-01,Rack-COO
+P-080,Radiator Fan Motor,Cooling,2,2,2000,2025-01-01,Rack-COO
+P-081,Radiator Hose Set,Cooling,3,4,600,2025-01-01,Rack-COO
+P-082,Coolant Expansion Tank,Cooling,4,3,800,2025-01-01,Rack-COO
+P-083,Heater Core,Cooling,2,1,3000,2025-01-01,Rack-COO
+P-084,Radiator Cap,Cooling,9,8,150,2025-01-01,Rack-COO
+P-085,Intercooler Assembly,Cooling,0,1,5000,2025-01-01,Rack-COO
+P-086,Fuel Filter,Fuel,10,6,400,2025-01-01,Rack-FUE
+P-087,Fuel Line Repair Kit,Fuel,4,3,600,2025-01-01,Rack-FUE
+P-088,Fuel Pressure Regulator,Fuel,1,2,2000,2025-01-01,Rack-FUE
+P-089,Fuel Level Sender,Fuel,5,2,1500,2025-01-01,Rack-FUE
+P-090,Diesel Injection Pump Reco,Fuel,5,1,18000,2025-01-01,Rack-FUE
+P-091,Fuel Cap,Fuel,10,5,300,2025-01-01,Rack-FUE
+P-092,CNG Reducer Kit,Fuel,1,1,3000,2025-01-01,Rack-FUE
+P-093,Catalytic Converter,Exhaust,4,1,10000,2025-01-01,Rack-EXH
+P-094,Silencer Muffler Assembly,Exhaust,7,2,2500,2025-01-01,Rack-EXH
+P-095,Exhaust Manifold Gasket,Exhaust,9,4,400,2025-01-01,Rack-EXH
+P-096,DPF Filter Assembly,Exhaust,0,1,12000,2025-01-01,Rack-EXH
+P-097,Exhaust Flex Pipe,Exhaust,6,3,1200,2025-01-01,Rack-EXH
+P-098,Exhaust Hanger Rubber Set,Exhaust,11,6,300,2025-01-01,Rack-EXH
+P-099,Steering Rack Assembly,Steering,6,1,7000,2025-01-01,Rack-STE
+P-100,Power Steering Pump,Steering,6,1,4500,2025-01-01,Rack-STE
+P-101,Tie Rod End,Steering,9,4,700,2025-01-01,Rack-STE
+P-102,EPS Motor Assembly,Steering,0,1,10000,2025-01-01,Rack-STE
+P-103,Steering Column U-Joint,Steering,2,2,1500,2025-01-01,Rack-STE
+P-104,Power Steering Fluid (1L),Steering,4,5,400,2025-01-01,Rack-STE
+P-105,AC Refrigerant R134a (1kg),AC,10,5,800,2025-01-01,Rack-AC
+P-106,AC Compressor Assembly,AC,5,1,10000,2025-01-01,Rack-AC
+P-107,AC Expansion Valve,AC,4,2,1500,2025-01-01,Rack-AC
+P-108,AC Condenser Assembly,AC,5,1,5000,2025-01-01,Rack-AC
+P-109,AC Evaporator Cleaner,AC,12,8,300,2025-01-01,Rack-AC
+P-110,Blower Motor Assembly,AC,7,2,2000,2025-01-01,Rack-AC
+P-111,Blower Motor Resistor,AC,7,3,500,2025-01-01,Rack-AC
+P-112,AC Compressor Belt,AC,6,4,450,2025-01-01,Rack-AC
+P-113,Heater Valve,AC,2,2,800,2025-01-01,Rack-AC
+P-114,Door Hinge Pin Set,Body,6,4,400,2025-01-01,Rack-BOD
+P-115,ORVM Mirror Assembly,Body,6,2,2000,2025-01-01,Rack-BOD
+P-116,Boot Lock Assembly,Body,5,2,1000,2025-01-01,Rack-BOD
+P-117,Sunroof Seal Kit,Body,0,1,1200,2025-01-01,Rack-BOD
+P-118,Windshield Glass,Body,4,1,4000,2025-01-01,Rack-BOD
+P-119,Chain Kit (Bike),Bike,8,4,1200,2025-01-01,Rack-BIK
+P-120,Sprocket Set (Bike),Bike,8,4,800,2025-01-01,Rack-BIK
+P-121,Bike Battery 12V,Bike,9,4,1200,2025-01-01,Rack-BIK
+P-122,CDI Unit,Bike,2,2,1500,2025-01-01,Rack-BIK
+P-123,Carburetor Assembly (Bike),Bike,5,2,2000,2025-01-01,Rack-BIK
+P-124,Clutch Plate Set (Bike),Bike,6,4,600,2025-01-01,Rack-BIK
+P-125,Self Start Motor (Bike),Bike,4,2,1800,2025-01-01,Rack-BIK
+P-126,Front Fork Seal Kit,Bike,7,4,400,2025-01-01,Rack-BIK
+P-127,Throttle Cable (Bike),Bike,10,6,200,2025-01-01,Rack-BIK
+P-128,Rear Brake Shoe (Bike),Bike,10,6,250,2025-01-01,Rack-BIK
+P-129,Speedometer Cable (Bike),Bike,9,4,200,2025-01-01,Rack-BIK
+P-130,Kick Starter Spring,Bike,3,4,200,2025-01-01,Rack-BIK
+P-131,CVT Belt (Scooter),Bike,7,3,900,2025-01-01,Rack-BIK
+P-132,Air Brake Valve,Truck,1,2,4000,2025-01-01,Rack-TRU
+P-133,Turbo Assembly (Commercial),Truck,3,1,25000,2025-01-01,Rack-TRU
+P-134,Leaf Spring Pack,Truck,7,2,3000,2025-01-01,Rack-TRU
+P-135,Clutch Assembly (Commercial),Truck,6,1,8000,2025-01-01,Rack-TRU
+P-136,King Pin Kit,Truck,3,3,2000,2025-01-01,Rack-TRU
+P-137,Engine Oil 5W30 (4L),Fluids,10,8,1800,2025-01-01,Rack-FLU
+P-138,Engine Oil 5W40 (4L),Fluids,8,6,2200,2025-01-01,Rack-FLU
+P-139,Engine Oil 10W40 (4L),Fluids,11,6,1500,2025-01-01,Rack-FLU
+P-140,Gear Oil 75W90 (1L),Fluids,5,5,500,2025-01-01,Rack-FLU
+P-141,Coolant Concentrate (1L),Fluids,13,8,400,2025-01-01,Rack-FLU
+P-142,Cabin Air Filter,Filters,6,6,350,2025-01-01,Rack-FIL
+P-143,Oil Filter,Filters,13,10,250,2025-01-01,Rack-FIL
+P-144,Wheel Nut Set,Misc,4,5,300,2025-01-01,Rack-MIS
+P-145,Tyre Tube (Bike),Bike,11,6,250,2025-01-01,Rack-BIK
+P-146,Front Brake Disc (Bike),Bike,5,3,800,2025-01-01,Rack-BIK
+P-147,Headlight Bulb H4,Electrical,12,8,250,2025-01-01,Rack-ELE
+P-148,Side Indicator Bulb,Electrical,11,10,50,2025-01-01,Rack-ELE
+P-149,Wiper Blade Set,Body,8,5,400,2025-01-01,Rack-BOD
+P-150,Battery Terminal Set,Electrical,15,10,100,2025-01-01,Rack-ELE
+P-151,Radiator Coolant Pre-mixed (1L),Fluids,9,8,300,2025-01-01,Rack-FLU
+P-152,Silicone Gasket Maker,Misc,7,6,200,2025-01-01,Rack-MIS
+P-153,Thread Lock Medium,Misc,7,4,250,2025-01-01,Rack-MIS
+P-154,Brake Cleaner Spray,Misc,11,8,200,2025-01-01,Rack-MIS
+P-155,WD-40 Penetrant Spray,Misc,11,6,250,2025-01-01,Rack-MIS
+P-156,Dielectric Grease,Misc,3,4,150,2025-01-01,Rack-MIS
+P-157,Cable Ties Pack (100),Misc,5,5,100,2025-01-01,Rack-MIS
+P-158,Fuse Assortment Kit,Electrical,3,3,200,2025-01-01,Rack-ELE
+P-159,Hose Clamp Assortment,Misc,9,4,300,2025-01-01,Rack-MIS
+P-160,Exhaust Paste Sealant,Exhaust,4,5,150,2025-01-01,Rack-EXH

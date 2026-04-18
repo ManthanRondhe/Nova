@@ -1,0 +1,161 @@
+part_id,part_name,category,compatible_vehicles,unit_price,supplier_part_number,min_stock_level,weight_kg
+P-001,Connecting Rod Bearing Set,Engine,Universal,1200,CRB-STD-01,3,0.3
+P-002,Oil Pan Gasket,Engine,Universal,350,OPG-UNI-01,5,0.1
+P-003,Piston Ring Set,Engine,Universal,2500,PRS-STD-01,2,0.5
+P-004,Cylinder Honing Service,Engine,Universal,3000,CHS-SVC-01,0,0
+P-005,Head Gasket,Engine,"Maruti Swift,Hyundai i20,Honda City",800,HG-SWF-01,3,0.2
+P-006,Cylinder Head Bolt Set,Engine,Universal,600,CHB-UNI-01,2,0.4
+P-007,Vacuum Hose Kit,Engine,Universal,400,VHK-UNI-01,5,0.1
+P-008,Starter Motor Assembly,Engine,"Maruti Swift,Hyundai i20",3500,SM-MSI-01,2,3.5
+P-009,Fuel Pump Assembly,Fuel,"Maruti Swift,Hyundai Creta",4500,FPA-UNI-01,2,1.2
+P-010,Ignition Coil Pack,Engine,Universal,1800,ICP-UNI-01,3,0.5
+P-011,Spark Plug Set (4pc),Engine,Universal,800,SPK-NGK-01,5,0.3
+P-012,Thermostat,Cooling,Universal,600,TST-UNI-01,4,0.2
+P-013,Timing Chain Kit,Engine,"Maruti Swift,Hyundai i20",3500,TCK-MSI-01,2,1.0
+P-014,Timing Chain Tensioner,Engine,Universal,1200,TCT-UNI-01,3,0.3
+P-015,Valve Cover Gasket,Engine,Universal,450,VCG-UNI-01,5,0.1
+P-016,Hydraulic Lifter Set,Engine,Universal,2800,HLS-UNI-01,2,0.6
+P-017,Serpentine Belt,Engine,Universal,650,SRB-UNI-01,4,0.3
+P-018,Air Filter,Engine,Universal,250,AFL-UNI-01,10,0.2
+P-019,Engine Mount Front,Engine,"Maruti Swift,Hyundai i20",1200,EMF-MSI-01,3,1.5
+P-020,Engine Mount Rear,Engine,"Maruti Swift,Hyundai i20",1000,EMR-MSI-01,3,1.2
+P-021,Crankshaft Position Sensor,Engine,Universal,1500,CPS-UNI-01,3,0.1
+P-022,Fuel Injector,Fuel,Universal,2000,FIJ-UNI-01,4,0.2
+P-023,Turbocharger Assembly,Engine,"Hyundai Creta,Tata Nexon",18000,TCA-UNI-01,1,8.0
+P-024,Idle Air Control Valve,Engine,Universal,1800,IAC-UNI-01,2,0.2
+P-025,Oil Pump Assembly,Engine,Universal,3500,OPA-UNI-01,1,1.5
+P-026,Glow Plug Set (4pc),Engine,Diesel,1200,GPS-UNI-01,3,0.2
+P-027,Alternator Assembly,Electrical,Universal,4500,ALT-UNI-01,2,4.0
+P-028,Water Pump,Cooling,Universal,2000,WTP-UNI-01,3,1.0
+P-029,Water Pump Gasket,Cooling,Universal,150,WPG-UNI-01,5,0.05
+P-030,EGR Valve,Exhaust,Diesel,3500,EGR-UNI-01,2,0.8
+P-031,VVT Solenoid,Engine,Universal,2200,VVT-UNI-01,2,0.3
+P-032,Clutch Disc,Transmission,"Maruti Swift,Hyundai i20",1800,CLD-MSI-01,3,1.5
+P-033,Pressure Plate,Transmission,"Maruti Swift,Hyundai i20",2200,PPL-MSI-01,2,3.0
+P-034,Release Bearing,Transmission,Universal,800,RBR-UNI-01,3,0.3
+P-035,Clutch Cable,Transmission,"Maruti Alto,WagonR",350,CCB-MSI-01,5,0.3
+P-036,Synchronizer Ring Set,Transmission,Universal,3500,SRS-UNI-01,1,0.5
+P-037,Gear Fork,Transmission,Universal,2500,GFK-UNI-01,1,0.4
+P-038,Flywheel,Transmission,Universal,4000,FLW-UNI-01,1,5.0
+P-039,Gearbox Oil Seal,Transmission,Universal,350,GOS-UNI-01,5,0.05
+P-040,ATF Fluid (1L),Transmission,Automatic,600,ATF-UNI-01,5,1.0
+P-041,CVT Fluid (1L),Transmission,CVT,900,CVF-UNI-01,3,1.0
+P-042,Differential Bearing Set,Transmission,Universal,2500,DBS-UNI-01,2,0.5
+P-043,Universal Joint,Transmission,Universal,800,UJT-UNI-01,4,0.3
+P-044,Reverse Idler Gear,Transmission,Universal,1800,RIG-UNI-01,1,0.4
+P-045,Clutch Master Cylinder,Transmission,Hydraulic Clutch,2000,CMC-UNI-01,2,0.5
+P-046,Front Brake Pad Set,Brakes,Universal,1200,FBP-UNI-01,5,0.8
+P-047,Rear Brake Pad Set,Brakes,Universal,1000,RBP-UNI-01,5,0.7
+P-048,Brake Disc Front,Brakes,Universal,1800,BDF-UNI-01,3,3.0
+P-049,Brake Master Cylinder,Brakes,Universal,2500,BMC-UNI-01,2,1.0
+P-050,Brake Fluid DOT4 (500ml),Brakes,Universal,250,BFL-UNI-01,8,0.5
+P-051,Brake Caliper Assembly,Brakes,Universal,3500,BCA-UNI-01,2,2.5
+P-052,ABS Wheel Speed Sensor,Brakes,Universal,2000,AWS-UNI-01,3,0.1
+P-053,Rear Wheel Cylinder,Brakes,Universal,600,RWC-UNI-01,3,0.3
+P-054,Handbrake Cable,Brakes,Universal,500,HBC-UNI-01,3,0.3
+P-055,Rear Brake Shoe Set,Brakes,Universal,800,RBS-UNI-01,4,0.5
+P-056,Brake Hose Flexible,Brakes,Universal,400,BHF-UNI-01,4,0.2
+P-057,Car Battery 12V 45Ah,Electrical,Universal,5000,BAT-45-01,3,12.0
+P-058,Alternator Assembly Reco,Electrical,Universal,4000,ALR-UNI-01,2,4.0
+P-059,Window Regulator Assembly,Body,Universal,2500,WRA-UNI-01,2,1.0
+P-060,Door Lock Actuator,Body,Universal,1200,DLA-UNI-01,3,0.2
+P-061,Electrical Wire Roll 10m,Electrical,Universal,300,EWR-UNI-01,5,0.5
+P-062,Instrument Cluster Repair,Electrical,Universal,3000,ICR-UNI-01,0,0
+P-063,Wiper Motor Assembly,Body,Universal,1800,WMA-UNI-01,2,1.0
+P-064,Horn Assembly,Electrical,Universal,400,HRN-UNI-01,4,0.3
+P-065,Immobilizer Key Transponder,Electrical,Universal,3000,IKT-UNI-01,1,0.05
+P-066,Oxygen Sensor,Electrical,Universal,2000,OXS-UNI-01,3,0.15
+P-067,MAF Sensor,Electrical,Universal,3000,MAF-UNI-01,2,0.2
+P-068,Camshaft Position Sensor,Electrical,Universal,1500,CMS-UNI-01,3,0.1
+P-069,Tail Lamp Bulb Set,Electrical,Universal,150,TLB-UNI-01,10,0.05
+P-070,Front Shock Absorber,Suspension,Universal,2500,FSA-UNI-01,4,2.5
+P-071,Rear Shock Absorber,Suspension,Universal,2000,RSA-UNI-01,4,2.0
+P-072,Ball Joint Lower,Suspension,Universal,800,BJL-UNI-01,4,0.4
+P-073,Wheel Bearing and Hub,Suspension,Universal,1800,WBH-UNI-01,3,1.0
+P-074,Suspension Bush Kit,Suspension,Universal,600,SBK-UNI-01,4,0.3
+P-075,Front Coil Spring,Suspension,Universal,1800,FCS-UNI-01,2,2.0
+P-076,Strut Top Mount,Suspension,Universal,1200,STM-UNI-01,3,0.5
+P-077,Anti Roll Bar Link,Suspension,Universal,600,ARL-UNI-01,4,0.3
+P-078,Rear Coil Spring,Suspension,Universal,1500,RCS-UNI-01,2,1.8
+P-079,Radiator Assembly,Cooling,Universal,5000,RAD-UNI-01,2,4.0
+P-080,Radiator Fan Motor,Cooling,Universal,2000,RFM-UNI-01,2,1.5
+P-081,Radiator Hose Set,Cooling,Universal,600,RHS-UNI-01,4,0.3
+P-082,Coolant Expansion Tank,Cooling,Universal,800,CET-UNI-01,3,0.3
+P-083,Heater Core,Cooling,Universal,3000,HTC-UNI-01,1,1.5
+P-084,Radiator Cap,Cooling,Universal,150,RCP-UNI-01,8,0.05
+P-085,Intercooler Assembly,Cooling,Diesel Turbo,5000,ICA-UNI-01,1,3.0
+P-086,Fuel Filter,Fuel,Universal,400,FFL-UNI-01,6,0.2
+P-087,Fuel Line Repair Kit,Fuel,Universal,600,FLR-UNI-01,3,0.2
+P-088,Fuel Pressure Regulator,Fuel,Universal,2000,FPR-UNI-01,2,0.2
+P-089,Fuel Level Sender,Fuel,Universal,1500,FLS-UNI-01,2,0.3
+P-090,Diesel Injection Pump Reco,Fuel,Diesel,18000,DIP-UNI-01,1,6.0
+P-091,Fuel Cap,Fuel,Universal,300,FCP-UNI-01,5,0.1
+P-092,CNG Reducer Kit,Fuel,CNG,3000,CRK-UNI-01,1,1.5
+P-093,Catalytic Converter,Exhaust,Universal,10000,CAT-UNI-01,1,5.0
+P-094,Silencer Muffler Assembly,Exhaust,Universal,2500,SMA-UNI-01,2,4.0
+P-095,Exhaust Manifold Gasket,Exhaust,Universal,400,EMG-UNI-01,4,0.1
+P-096,DPF Filter Assembly,Exhaust,Diesel,12000,DPF-UNI-01,1,6.0
+P-097,Exhaust Flex Pipe,Exhaust,Universal,1200,EFP-UNI-01,3,0.5
+P-098,Exhaust Hanger Rubber Set,Exhaust,Universal,300,EHR-UNI-01,6,0.1
+P-099,Steering Rack Assembly,Steering,Universal,7000,SRA-UNI-01,1,5.0
+P-100,Power Steering Pump,Steering,Universal,4500,PSP-UNI-01,1,2.5
+P-101,Tie Rod End,Steering,Universal,700,TRE-UNI-01,4,0.3
+P-102,EPS Motor Assembly,Steering,Universal,10000,EPS-UNI-01,1,3.0
+P-103,Steering Column U-Joint,Steering,Universal,1500,SCU-UNI-01,2,0.4
+P-104,Power Steering Fluid (1L),Steering,Universal,400,PSF-UNI-01,5,1.0
+P-105,AC Refrigerant R134a (1kg),AC,Universal,800,ACR-UNI-01,5,1.0
+P-106,AC Compressor Assembly,AC,Universal,10000,ACC-UNI-01,1,6.0
+P-107,AC Expansion Valve,AC,Universal,1500,AEV-UNI-01,2,0.2
+P-108,AC Condenser Assembly,AC,Universal,5000,ACD-UNI-01,1,3.0
+P-109,AC Evaporator Cleaner,AC,Universal,300,AEC-UNI-01,8,0.3
+P-110,Blower Motor Assembly,AC,Universal,2000,BMA-UNI-01,2,1.0
+P-111,Blower Motor Resistor,AC,Universal,500,BMR-UNI-01,3,0.1
+P-112,AC Compressor Belt,AC,Universal,450,ACB-UNI-01,4,0.2
+P-113,Heater Valve,AC,Universal,800,HTV-UNI-01,2,0.2
+P-114,Door Hinge Pin Set,Body,Universal,400,DHP-UNI-01,4,0.2
+P-115,ORVM Mirror Assembly,Body,Universal,2000,ORM-UNI-01,2,0.5
+P-116,Boot Lock Assembly,Body,Universal,1000,BLA-UNI-01,2,0.3
+P-117,Sunroof Seal Kit,Body,Universal,1200,SSK-UNI-01,1,0.2
+P-118,Windshield Glass,Body,Model Specific,4000,WSG-UNI-01,1,8.0
+P-119,Chain Kit (Bike),Bike,Universal Bike,1200,BCK-UNI-01,4,1.0
+P-120,Sprocket Set (Bike),Bike,Universal Bike,800,BSS-UNI-01,4,0.8
+P-121,Bike Battery 12V,Bike,Universal Bike,1200,BBT-UNI-01,4,2.5
+P-122,CDI Unit,Bike,Universal Bike,1500,CDI-UNI-01,2,0.2
+P-123,Carburetor Assembly (Bike),Bike,Carb Bikes,2000,CBA-UNI-01,2,0.8
+P-124,Clutch Plate Set (Bike),Bike,Universal Bike,600,CPS-BK-01,4,0.3
+P-125,Self Start Motor (Bike),Bike,Universal Bike,1800,SSM-UNI-01,2,1.0
+P-126,Front Fork Seal Kit,Bike,Universal Bike,400,FFS-UNI-01,4,0.1
+P-127,Throttle Cable (Bike),Bike,Universal Bike,200,TCB-UNI-01,6,0.1
+P-128,Rear Brake Shoe (Bike),Bike,Universal Bike,250,RBS-BK-01,6,0.2
+P-129,Speedometer Cable (Bike),Bike,Universal Bike,200,SMC-UNI-01,4,0.1
+P-130,Kick Starter Spring,Bike,Universal Bike,200,KSS-UNI-01,4,0.1
+P-131,CVT Belt (Scooter),Bike,Scooter,900,CVB-UNI-01,3,0.3
+P-132,Air Brake Valve,Truck,Commercial,4000,ABV-UNI-01,2,2.0
+P-133,Turbo Assembly (Commercial),Truck,Commercial,25000,TAC-UNI-01,1,10.0
+P-134,Leaf Spring Pack,Truck,Commercial,3000,LSP-UNI-01,2,15.0
+P-135,Clutch Assembly (Commercial),Truck,Commercial,8000,CAC-UNI-01,1,8.0
+P-136,King Pin Kit,Truck,Commercial,2000,KPK-UNI-01,3,1.5
+P-137,Engine Oil 5W30 (4L),Fluids,Universal,1800,EO530-01,8,4.0
+P-138,Engine Oil 5W40 (4L),Fluids,Universal,2200,EO540-01,6,4.0
+P-139,Engine Oil 10W40 (4L),Fluids,Universal,1500,EO1040-01,6,4.0
+P-140,Gear Oil 75W90 (1L),Fluids,Universal,500,GO7590-01,5,1.0
+P-141,Coolant Concentrate (1L),Fluids,Universal,400,CCT-UNI-01,8,1.0
+P-142,Cabin Air Filter,Filters,Universal,350,CAF-UNI-01,6,0.1
+P-143,Oil Filter,Filters,Universal,250,OFL-UNI-01,10,0.2
+P-144,Wheel Nut Set,Misc,Universal,300,WNS-UNI-01,5,0.5
+P-145,Tyre Tube (Bike),Bike,Universal Bike,250,TTB-UNI-01,6,0.3
+P-146,Front Brake Disc (Bike),Bike,Universal Bike,800,FBD-BK-01,3,1.0
+P-147,Headlight Bulb H4,Electrical,Universal,250,HBH4-01,8,0.05
+P-148,Side Indicator Bulb,Electrical,Universal,50,SIB-UNI-01,10,0.02
+P-149,Wiper Blade Set,Body,Universal,400,WBS-UNI-01,5,0.2
+P-150,Battery Terminal Set,Electrical,Universal,100,BTS-UNI-01,10,0.1
+P-151,Radiator Coolant Pre-mixed (1L),Fluids,Universal,300,RCM-UNI-01,8,1.0
+P-152,Silicone Gasket Maker,Misc,Universal,200,SGM-UNI-01,6,0.1
+P-153,Thread Lock Medium,Misc,Universal,250,TLM-UNI-01,4,0.05
+P-154,Brake Cleaner Spray,Misc,Universal,200,BCS-UNI-01,8,0.4
+P-155,WD-40 Penetrant Spray,Misc,Universal,250,WDP-UNI-01,6,0.4
+P-156,Dielectric Grease,Misc,Universal,150,DGR-UNI-01,4,0.1
+P-157,Cable Ties Pack (100),Misc,Universal,100,CTP-UNI-01,5,0.2
+P-158,Fuse Assortment Kit,Electrical,Universal,200,FAK-UNI-01,3,0.1
+P-159,Hose Clamp Assortment,Misc,Universal,300,HCA-UNI-01,4,0.3
+P-160,Exhaust Paste Sealant,Exhaust,Universal,150,EPS-UNI-01,5,0.2

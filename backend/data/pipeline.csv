@@ -1,0 +1,10 @@
+pipeline_id,mechanic_id,mechanic_name,jobcard_id,task_description,priority,status,start_time,estimated_end,actual_end
+PL-0001,M-001,Rajesh Kumar,JC-0001,Connecting Rod Bearing Failure - engine making knocking noise when accelerating and blue smoke,Urgent,Done,2026-04-16 17:34:48,,2026-04-16 17:40:44
+PL-0002,M-001,Rajesh Kumar,JC-0001,Kick Starter Mechanism Failure - Starter moter,Medium,Done,2026-04-16 18:00:38,,2026-04-16 18:55:32
+PL-0003,M-001,Rajesh Kumar,JC-0002,Starter Motor Failure - engine not starting,High,Done,2026-04-16 18:41:34,,2026-04-16 18:55:33
+PL-0004,M-001,Rajesh Kumar,JC-0002,Starter Motor Failure - Engine cranks but car not starting,High,Done,2026-04-16 18:49:09,,2026-04-16 18:55:34
+PL-0005,M-001,Rajesh Kumar,JC-0003,Starter Motor Failure - Engine cranks but car is not starting,High,Queued,2026-04-17 15:18:59,,
+PL-0006,M-002,Sunil Sharma,JC-0004,Brake Hose Deterioration - Brake Pad change,Urgent,Queued,2026-04-18 12:05:33,,
+PL-0007,M-001,Rajesh Kumar,JC-0005,Expansion Tank Crack - Thrrotal Body cleaning,Medium,Queued,2026-04-18 12:06:47,,
+PL-0008,M-002,Sunil Sharma,JC-0006,"Brake Hose Deterioration - Brake pads change
+",Urgent,Queued,2026-04-18 12:11:41,,

@@ -1,0 +1,8 @@
+jobcard_id,vehicle_make,vehicle_model,vehicle_year,vehicle_reg,owner_name,owner_phone,complaint,diagnosis_fault,diagnosis_confidence,assigned_mechanic_id,assigned_mechanic_name,status,required_parts,estimated_time,estimated_cost,actual_cost,priority,bay_number,created_at,updated_at,completed_at
+JC-0001,Datsun,Redigo,2015,MH05FE3827,Rajendra,7666696111,Starter moter,Kick Starter Mechanism Failure,0.46,M-001,Rajesh Kumar,Completed,P-130,1.5,800-2000,,Medium,1,2026-04-16 18:00:38,2026-04-16 18:40:33,2026-04-16 18:40:33
+JC-0002,Datsun,Redigo,2015,MH05FE3827,Rajendra,7666696123,Engine cranks but car not starting,Starter Motor Failure,0.74,M-001,Rajesh Kumar,Completed,P-008,2.0,3000-5500,,High,1,2026-04-16 18:49:09,2026-04-16 18:56:00,2026-04-16 18:56:00
+JC-0003,honda,corolla,2011,MH04FE2356,Manthan,8433575323,Engine cranks but car is not starting,Starter Motor Failure,0.72,M-001,Rajesh Kumar,Pending,P-008,2.0,3000-5500,,High,1,2026-04-17 15:18:59,2026-04-17 15:18:59,
+JC-0004,Maruti,Swift,2011,MH04AD1423,Manthan,9022622469,Brake Pad change,Brake Hose Deterioration,0.42,M-002,Sunil Sharma,Pending,P-056,1.0,1000-2000,,Urgent,2,2026-04-18 12:05:33,2026-04-18 12:05:33,
+JC-0005,Maruti,Waganor,2013,MH04AD1422,Rasika,9022622469,Thrrotal Body cleaning,Expansion Tank Crack,0.38,M-001,Rajesh Kumar,Pending,P-082,1.0,1000-2000,,Medium,3,2026-04-18 12:06:47,2026-04-18 12:06:47,
+JC-0006,Skoda,Rapid,2013,MH04AD1422,Rasika,9022622469,"Brake pads change
+",Brake Hose Deterioration,0.38,M-002,Sunil Sharma,Pending,P-056,1.0,1000-2000,,Urgent,4,2026-04-18 12:11:41,2026-04-18 12:11:41,

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AutoMech AI - Admin Dashboard for Garage Workforce Management">
+    <title>AutoMech AI - Admin Panel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <div class="admin-layout">
+        <!-- ━━━ Sidebar ━━━ -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-brand">
+                <svg viewBox="0 0 60 60" fill="none">
+                    <circle cx="30" cy="30" r="27" stroke="url(#lg2)" stroke-width="2.5"/>
+                    <path d="M20 30h20M30 20v20M22 22l16 16M38 22l-16 16" stroke="url(#lg2)" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+                    <defs><linearGradient id="lg2" x1="0" y1="0" x2="60" y2="60">
+                        <stop stop-color="#00e5ff"/><stop offset="0.5" stop-color="#0055ff"/><stop offset="1" stop-color="#b048ff"/>
+                    </linearGradient></defs>
+                </svg>
+                <div class="sidebar-brand-text">
+                    <h2>AutoMech</h2>
+                    <span>Admin Panel</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <div class="admin-nav-item active" data-tab="overview">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+                    <span>Overview</span>
+                </div>
+                <div class="admin-nav-item" data-tab="workforce">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+                    <span>Workforce</span>
+                </div>
+                <div class="admin-nav-item" data-tab="attendance">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14l2 2 4-4"/></svg>
+                    <span>Attendance</span>
+                </div>
+                <div class="admin-nav-item" data-tab="payroll">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                    <span>Payroll</span>
+                </div>
+                <div class="admin-nav-item" data-tab="insurance">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    <span>Insurance</span>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="admin-info">
+                    <div class="admin-avatar">A</div>
+                    <div class="admin-meta">
+                        <div class="admin-name-el" id="admin-name">Admin</div>
+                        <div class="admin-role-el" id="admin-role">Super Admin</div>
+                    </div>
+                </div>
+                <button class="btn-logout" id="logout-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- ━━━ Main Content ━━━ -->
+        <main class="admin-main">
+            <div class="admin-header">
+                <h1>Admin Dashboard</h1>
+                <div class="header-meta">
+                    <div class="header-badge">
+                        <div class="dot"></div>
+                        <span>System Online</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Toast Container -->
+            <div class="toast-container" id="admin-toast"></div>
+
+            <!-- ━━━ TAB: OVERVIEW ━━━ -->
+            <div class="admin-tab active" id="tab-overview">
+                <div class="stat-cards">
+                    <div class="stat-card-a">
+                        <div class="stat-label">Total Mechanics</div>
+                        <div class="stat-val text-accent" id="ov-total-mechanics">—</div>
+                    </div>
+                    <div class="stat-card-a">
+                        <div class="stat-label">Present Today</div>
+                        <div class="stat-val text-success" id="ov-present-today">—</div>
+                    </div>
+                    <div class="stat-card-a">
+                        <div class="stat-label">Jobs Completed</div>
+                        <div class="stat-val text-accent" id="ov-jobs-completed">—</div>
+                    </div>
+                    <div class="stat-card-a">
+                        <div class="stat-label">Jobs Pending</div>
+                        <div class="stat-val text-warning" id="ov-jobs-pending">—</div>
+                    </div>
+                    <div class="stat-card-a">
+                        <div class="stat-label">Salary Pending</div>
+                        <div class="stat-val text-danger" id="ov-salary-pending">—</div>
+                    </div>
+                    <div class="stat-card-a">
+                        <div class="stat-label">Insurance Expiring</div>
+                        <div class="stat-val text-warning" id="ov-insurance-expiring">—</div>
+                    </div>
+                </div>
+
+                <div class="two-col">
+                    <!-- Live Mechanic-Vehicle Status -->
+                    <div class="section">
+                        <div class="section-header">
+                            <div class="section-title">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                Live Status — Who's Working on What
+                            </div>
+                        </div>
+                        <div id="live-status-grid"></div>
+                    </div>
+
+                    <!-- Mechanic of the Month -->
+                    <div class="section">
+                        <div class="section-header">
+                            <div class="section-title">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+                                Mechanic of the Month
+                            </div>
+                        </div>
+                        <div class="motm-card">
+                            <div class="motm-trophy">🏆</div>
+                            <div class="motm-label">Top Performer</div>
+                            <div class="motm-name" id="motm-name">—</div>
+                            <div class="motm-detail" id="motm-detail">Loading...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ━━━ TAB: WORKFORCE ━━━ -->
+            <div class="admin-tab" id="tab-workforce">
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+                            Performance Analytics
+                        </div>
+                    </div>
+                    <div class="card-container" id="workforce-table"></div>
+                </div>
+
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                            Leaderboard — Most Jobs Completed
+                        </div>
+                    </div>
+                    <div id="leaderboard"></div>
+                </div>
+            </div>
+
+            <!-- ━━━ TAB: ATTENDANCE ━━━ -->
+            <div class="admin-tab" id="tab-attendance">
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                            Today's Attendance
+                        </div>
+                    </div>
+                    <div id="attendance-grid"></div>
+                </div>
+            </div>
+
+            <!-- ━━━ TAB: PAYROLL ━━━ -->
+            <div class="admin-tab" id="tab-payroll">
+                <!-- Salary Stats -->
+                <div class="stat-cards" style="margin-bottom:20px;">
+                    <div class="stat-card-a">
+                        <div class="stat-label">Total Paid</div>
+                        <div class="stat-val text-success" id="pay-total-paid">—</div>
+                    </div>
+                    <div class="stat-card-a">
+                        <div class="stat-label">Total Pending</div>
+                        <div class="stat-val text-danger" id="pay-total-pending">—</div>
+                    </div>
+                    <div class="stat-card-a">
+                        <div class="stat-label">Unpaid Records</div>
+                        <div class="stat-val text-warning" id="pay-unpaid-count">—</div>
+                    </div>
+                </div>
+
+                <!-- Salary Table -->
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+                            Salary Records
+                        </div>
+                    </div>
+                    <div class="card-container" id="salary-table"></div>
+                </div>
+
+                <!-- Create Salary -->
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-title">Create Monthly Salary</div>
+                    </div>
+                    <div class="card-container">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label>Mechanic</label>
+                                <select id="sal-mechanic"></select>
+                            </div>
+                            <div class="form-group">
+                                <label>Base Salary (₹)</label>
+                                <input type="number" id="sal-base" value="15000" placeholder="15000">
+                            </div>
+                            <div class="form-group">
+                                <label>Bonus (₹)</label>
+                                <input type="number" id="sal-bonus" value="0" placeholder="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Deductions (₹)</label>
+                                <input type="number" id="sal-deductions" value="0" placeholder="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Notes</label>
+                                <input type="text" id="sal-notes" placeholder="Optional notes">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" id="create-salary-btn">Create Salary Record</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ━━━ TAB: INSURANCE ━━━ -->
+            <div class="admin-tab" id="tab-insurance">
+                <!-- Insurance Stats -->
+                <div class="stat-cards" style="margin-bottom:20px;">
+                    <div class="stat-card-a">
+                        <div class="stat-label">Total Policies</div>
+                        <div class="stat-val text-accent" id="ins-total">—</div>
+                    </div>
+                    <div class="stat-card-a">
+                        <div class="stat-label">Expiring / Expired</div>
+                        <div class="stat-val text-danger" id="ins-expiring">—</div>
+                    </div>
+                </div>
+
+                <div class="two-col-equal">
+                    <!-- Insurance Table -->
+                    <div class="section">
+                        <div class="section-header">
+                            <div class="section-title">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                                Insurance Records
+                            </div>
+                        </div>
+                        <div class="card-container" id="insurance-table"></div>
+                    </div>
+
+                    <!-- Expiring & Add -->
+                    <div>
+                        <div class="section">
+                            <div class="section-header">
+                                <div class="section-title">⚠️ Expiring Soon</div>
+                            </div>
+                            <div id="expiring-alerts"></div>
+                        </div>
+
+                        <div class="section">
+                            <div class="section-header">
+                                <div class="section-title">Add Insurance</div>
+                            </div>
+                            <div class="card-container">
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label>Vehicle Reg #</label>
+                                        <input type="text" id="ins-reg" placeholder="MH04AD1423">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Owner Name</label>
+                                        <input type="text" id="ins-owner" placeholder="Name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Owner Phone</label>
+                                        <input type="text" id="ins-phone" placeholder="Phone">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Insurance Provider</label>
+                                        <input type="text" id="ins-provider" placeholder="ICICI Lombard">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Policy Number</label>
+                                        <input type="text" id="ins-policy" placeholder="POL-123456">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Expiry Date</label>
+                                        <input type="date" id="ins-expiry">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Type</label>
+                                        <select id="ins-type">
+                                            <option>Comprehensive</option>
+                                            <option>Third-Party</option>
+                                            <option>Fire & Theft</option>
+                                            <option>Standalone OD</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Premium (₹)</label>
+                                        <input type="number" id="ins-premium" placeholder="12000">
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary" id="add-insurance-btn">Add Insurance Record</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/admin-api.js"></script>
+    <script src="js/admin-app.js"></script>
+</body>
+</html>
