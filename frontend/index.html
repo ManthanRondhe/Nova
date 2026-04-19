@@ -175,6 +175,11 @@
         input.type = input.type === 'password' ? 'text' : 'password';
     }
 
+    // Dynamic API URL for Vercel vs Localhost
+    const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const RENDER_BACKEND_URL = 'https://nova-backend-ftga.onrender.com';
+    const API_BASE = isLocalhost ? 'http://localhost:8000/api' : `${RENDER_BACKEND_URL}/api`;
+
     async function loginAdmin() {
         const password = document.getElementById('admin-password').value.trim();
         if (!password) return;
@@ -183,7 +188,7 @@
         btn.innerHTML = '<span>Authenticating...</span>';
 
         try {
-            const res = await fetch('/api/admin/login', {
+            const res = await fetch(`${API_BASE}/admin/login`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({password})
