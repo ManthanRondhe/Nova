@@ -178,6 +178,48 @@ class AdminService:
     # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     # SALARY MANAGEMENT
     # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    def auto_calculate_salary_preview(self, mechanic_id, month=None, year=None):
+        """Auto-calculate base salary, incentives, and bonuses based on performance."""
+        now = datetime.now()
+        month = month or now.month
+        year = year or now.year
+        prefix = f"{year}-{month:02d}" if isinstance(month, int) else f"{year}-{month}"
+        
+        jobcards = self._read_csv(self.jobcards_file)
+        completed_jobs = sum(1 for j in jobcards 
+                             if j.get("assigned_mechanic_id") == mechanic_id 
+                             and j.get("status") == "Completed" 
+                             and j.get("completed_at", "").startswith(prefix))
+        
+        base_salary = 9000
+        bonus = 0
+        notes = []
+        
+        # Incentive: cap at 15 vehicles
+        MAX_INCENTIVE_VEHICLES = 15
+        INCENTIVE_PER_VEHICLE = 500
+        vehicles_for_incentive = min(completed_jobs, MAX_INCENTIVE_VEHICLES)
+        incentive = vehicles_for_incentive * INCENTIVE_PER_VEHICLE
+        if incentive > 0:
+            bonus += incentive
+            notes.append(f"₹{incentive} incentive ({vehicles_for_incentive} vehicles completed)")
+            
+        # Extra bonus to employee of the month
+        eotm = self.get_mechanic_of_month(month, year)
+        if eotm and eotm.get("mechanic_id") == mechanic_id:
+            bonus += 3000
+            notes.append("₹3000 EOTM bonus")
+            
+        final_notes = " + ".join(notes) if notes else "No bonuses this month"
+        return {
+            "mechanic_id": mechanic_id,
+            "base_salary": base_salary,
+            "bonus": bonus,
+            "deductions": 0,
+            "notes": final_notes,
+            "completed_jobs": completed_jobs
+        }
+
     def create_salary_record(self, mechanic_id, mechanic_name, base_salary, bonus=0,
                               deductions=0, month=None, year=None, notes=""):
         """Create a monthly salary record."""

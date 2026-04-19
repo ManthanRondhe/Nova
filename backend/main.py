@@ -591,6 +591,11 @@ async def monthly_attendance(mechanic_id: str, month: int = None, year: int = No
     return admin_service.get_monthly_attendance(mechanic_id, month, year)
 
 # ─── Salaries ──────────────────────────────────
+@app.get("/api/admin/salaries/auto-calculate/{mechanic_id}")
+async def auto_calculate_salary(mechanic_id: str, month: int = None, year: int = None):
+    data = admin_service.auto_calculate_salary_preview(mechanic_id, month, year)
+    return {"auto_calculated": data}
+
 @app.get("/api/admin/salaries")
 async def get_salaries(month: int = None, year: int = None, mechanic_id: str = None):
     return {"salaries": admin_service.get_salaries(month, year, mechanic_id)}

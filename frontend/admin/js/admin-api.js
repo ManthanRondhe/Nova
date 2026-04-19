@@ -41,6 +41,13 @@ const adminApi = {
     },
 
     // Salaries
+    autoCalculateSalary(mechanic_id, month, year) {
+        const params = new URLSearchParams();
+        if (month) params.set('month', month);
+        if (year) params.set('year', year);
+        const q = params.toString();
+        return this._fetch(`/salaries/auto-calculate/${mechanic_id}${q ? '?' + q : ''}`);
+    },
     getSalaries(month, year, mechanic_id) {
         const params = new URLSearchParams();
         if (month) params.set('month', month);

@@ -187,7 +187,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Populate mechanic dropdown for new salary
             const sel = $('#sal-mechanic');
-            if (sel) sel.innerHTML = mechs.map(m => `<option value="${m.mechanic_id}" data-name="${m.name}">${m.name} (${m.mechanic_id})</option>`).join('');
+            if (sel) {
+                sel.innerHTML = mechs.map(m => `<option value="${m.mechanic_id}" data-name="${m.name}">${m.name} (${m.mechanic_id})</option>`).join('');
+                if (mechs.length > 0) sel.dispatchEvent(new Event('change'));
+            }
         } catch (e) { console.error(e); toast('Failed to load payroll', 'error'); }
     }
 
@@ -200,10 +203,30 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Create salary
+    const selMechanic = $('#sal-mechanic');
+    if (selMechanic) {
+        selMechanic.addEventListener('change', async () => {
+            const val = selMechanic.value;
+            if (!val) return;
+            try {
+                const res = await adminApi.autoCalculateSalary(val);
+                if (res.auto_calculated) {
+                    $('#sal-base').value = res.auto_calculated.base_salary;
+                    $('#sal-bonus').value = res.auto_calculated.bonus;
+                    $('#sal-notes').value = res.auto_calculated.notes;
+                    toast('Auto-calculated based on performance!', 'info');
+                }
+            } catch (e) {
+                console.error("Auto calculation failed", e);
+            }
+        });
+    }
+
     const salForm = $('#create-salary-btn');
     if (salForm) salForm.addEventListener('click', async () => {
         const sel = $('#sal-mechanic');
         const opt = sel.options[sel.selectedIndex];
+        if (!opt) return;
         const data = {
             mechanic_id: sel.value,
             mechanic_name: opt.dataset.name,
