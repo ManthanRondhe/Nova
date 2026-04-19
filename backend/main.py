@@ -695,16 +695,14 @@ frontend_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "f
 # Serve login page at root
 @app.get("/")
 async def serve_login():
-    login_file = os.path.join(frontend_dir, "login.html")
-    if os.path.exists(login_file):
-        return FileResponse(login_file)
-    return FileResponse(os.path.join(frontend_dir, "index.html"))
+    login_file = os.path.join(frontend_dir, "index.html")
+    return FileResponse(login_file)
 
 # Serve assistant at /assistant/
 @app.get("/assistant")
 @app.get("/assistant/")
 async def serve_assistant():
-    return FileResponse(os.path.join(frontend_dir, "index.html"))
+    return FileResponse(os.path.join(frontend_dir, "assistant.html"))
 
 # Serve admin at /admin/
 @app.get("/admin")

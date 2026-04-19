@@ -3,510 +3,214 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="AutoMech AI - Voice-Powered Intelligent Garage Management Assistant for automobile diagnostics, job cards, and inventory management">
-    <title>AutoMech AI - Intelligent Garage Assistant</title>
+    <meta name="description" content="AutoMech AI - Login Portal for Garage Management System">
+    <title>AutoMech AI - Login</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="css/login.css">
 </head>
 <body>
-    <!-- Animated Particle Canvas -->
-    <canvas id="particle-canvas"></canvas>
-    <canvas id="rain-canvas"></canvas>
-    <div id="hex-overlay"></div>
-
-    <!-- Animated Background -->
+    <canvas id="login-particles"></canvas>
     <div class="bg-grid"></div>
     <div class="bg-glow bg-glow-1"></div>
     <div class="bg-glow bg-glow-2"></div>
 
-    <!-- Sidebar Navigation -->
-    <nav id="sidebar" class="sidebar">
-        <div class="sidebar-header">
-            <div class="logo-icon">
-                <svg viewBox="0 0 40 40" fill="none">
-                    <circle cx="20" cy="20" r="18" stroke="url(#grad)" stroke-width="2.5"/>
-                    <path d="M14 20h12M20 14v12M15 15l10 10M25 15l-10 10" stroke="url(#grad)" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
-                    <defs>
-                        <linearGradient id="grad" x1="0" y1="0" x2="40" y2="40">
-                            <stop stop-color="#00e5ff"/>
-                            <stop offset="0.5" stop-color="#0055ff"/>
-                            <stop offset="1" stop-color="#b048ff"/>
-                        </linearGradient>
-                    </defs>
+    <div class="login-container">
+        <!-- Branding -->
+        <div class="login-brand">
+            <div class="brand-logo">
+                <svg viewBox="0 0 60 60" fill="none">
+                    <circle cx="30" cy="30" r="27" stroke="url(#lg)" stroke-width="2.5"/>
+                    <path d="M20 30h20M30 20v20M22 22l16 16M38 22l-16 16" stroke="url(#lg)" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+                    <defs><linearGradient id="lg" x1="0" y1="0" x2="60" y2="60">
+                        <stop stop-color="#00e5ff"/><stop offset="0.5" stop-color="#0055ff"/><stop offset="1" stop-color="#b048ff"/>
+                    </linearGradient></defs>
                 </svg>
             </div>
-            <div class="logo-text">
-                <h1>AutoMech</h1>
-                <span>AI Assistant</span>
-            </div>
+            <h1 class="brand-title glitch-text" data-text="AutoMech AI">AutoMech AI</h1>
+            <p class="brand-subtitle">Intelligent Garage Management System</p>
         </div>
 
-        <ul class="nav-links">
-            <li class="active" data-page="dashboard">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-                <span>Dashboard</span>
-            </li>
-            <li data-page="diagnosis">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-                <span>Diagnosis</span>
-            </li>
-            <li data-page="jobcards">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-                <span>Job Cards</span>
-            </li>
-            <li data-page="mechanics">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
-                <span>Mechanics</span>
-            </li>
-            <li data-page="inventory">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/><polyline points="3.27,6.96 12,12.01 20.73,6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-                <span>Inventory</span>
-            </li>
-            <li data-page="dealers">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>
-                <span>Dealers</span>
-            </li>
-            <li data-page="pipeline">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>
-                <span>Pipeline</span>
-            </li>
-            <li data-page="notifications">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
-                <span>Notifications</span>
-                <span class="badge" id="notif-badge"></span>
-            </li>
-        </ul>
-
-        <div class="sidebar-footer">
-            <div class="telegram-status" id="telegram-status">
-                <div class="status-dot"></div>
-                <span>Telegram: Checking...</span>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Main Content Area -->
-    <main id="main-content" class="main-content">
-        <!-- Top Bar -->
-        <header class="top-bar">
-            <div class="top-left">
-                <button id="sidebar-toggle" class="icon-btn">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-                </button>
-                <div class="breadcrumb" id="breadcrumb">Dashboard</div>
-            </div>
-            <div class="top-right">
-                <div class="voice-status" id="voice-status">
-                    <span class="status-text">Click mic to speak</span>
+        <!-- Role Selection Cards -->
+        <div class="role-cards" id="role-cards">
+            <div class="role-card" id="card-staff" onclick="selectRole('staff')">
+                <div class="role-icon staff-icon">
+                    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 38v-2a8 8 0 018-8h4a8 8 0 018 8v2"/>
+                        <circle cx="24" cy="16" r="7"/>
+                        <path d="M18 10l-4-4M30 10l4-4" stroke-width="1.5" opacity="0.5"/>
+                    </svg>
                 </div>
-                <button id="voice-btn" class="voice-btn" title="Hold to speak">
-                    <div class="pulse-ring"></div>
-                    <div class="pulse-ring"></div>
-                    <div class="pulse-ring"></div>
-                    <div class="voice-waves">
-                        <span></span><span></span><span></span><span></span><span></span>
+                <h2>Field Staff</h2>
+                <p>Access the AI Assistant — voice-powered diagnostics, job cards, and inventory management</p>
+                <div class="role-action">
+                    <span>Click to Enter</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </div>
+                <div class="role-badge">No Password Required</div>
+            </div>
+
+            <div class="role-card admin-card" id="card-admin" onclick="selectRole('admin')">
+                <div class="role-icon admin-icon">
+                    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="8" y="20" width="32" height="20" rx="4"/>
+                        <path d="M16 20v-6a8 8 0 1116 0v6"/>
+                        <circle cx="24" cy="32" r="3"/>
+                        <path d="M24 35v3"/>
+                    </svg>
+                </div>
+                <h2>Admin Panel</h2>
+                <p>Manage workforce, track attendance, payroll, performance analytics, and insurance</p>
+                <div class="role-action">
+                    <span>Authenticate</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                </div>
+                <div class="role-badge admin-badge">Password Required</div>
+            </div>
+        </div>
+
+        <!-- Admin Password Form (hidden by default) -->
+        <div class="admin-login-form hidden" id="admin-form">
+            <div class="form-back" onclick="goBack()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                <span>Back</span>
+            </div>
+            <div class="form-card">
+                <div class="form-header">
+                    <div class="form-icon">
+                        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="8" y="20" width="32" height="20" rx="4"/>
+                            <path d="M16 20v-6a8 8 0 1116 0v6"/>
+                            <circle cx="24" cy="32" r="3"/>
+                            <path d="M24 35v3"/>
+                        </svg>
                     </div>
-                    <svg class="mic-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-                </button>
-            </div>
-        </header>
-
-        <!-- Voice Conversation Panel -->
-        <div id="voice-panel" class="voice-panel hidden">
-            <div class="voice-conversation" id="voice-conversation"></div>
-            <div class="voice-input-area">
-                <input type="text" id="voice-text-input" placeholder="Type a command or click the mic to speak..." autocomplete="off">
-                <button id="voice-send-btn" class="btn btn-primary btn-sm">Send</button>
-            </div>
-        </div>
-
-        <!-- Toast Notifications -->
-        <div id="toast-container" class="toast-container"></div>
-
-        <!-- ===== PAGE: Dashboard ===== -->
-        <section id="page-dashboard" class="page active">
-            <div class="page-header">
-                <h2>Garage Dashboard</h2>
-                <p>Real-time overview of your garage operations</p>
-            </div>
-            <div class="stats-grid" id="dashboard-stats"></div>
-            <div class="dashboard-grid">
-                <div class="card" id="recent-jobcards-card">
-                    <div class="card-header"><h3>Recent Job Cards</h3></div>
-                    <div class="card-body" id="recent-jobcards"></div>
+                    <h2>Admin Authentication</h2>
+                    <p>Enter your admin password to access the panel</p>
                 </div>
-                <div class="card" id="low-stock-card">
-                    <div class="card-header"><h3>Low Stock Alerts</h3></div>
-                    <div class="card-body" id="low-stock-alerts"></div>
-                </div>
-                <div class="card" id="mechanic-status-card">
-                    <div class="card-header"><h3>Mechanic Status</h3></div>
-                    <div class="card-body" id="mechanic-status-overview"></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ===== PAGE: Diagnosis ===== -->
-        <section id="page-diagnosis" class="page">
-            <div class="page-header">
-                <h2>AI Fault Diagnosis</h2>
-                <p>Describe vehicle symptoms for AI-powered fault detection</p>
-            </div>
-            <div class="diagnosis-container">
-                <div class="diagnosis-input-section">
-                    <div class="card">
-                        <div class="card-header"><h3>Describe the Problem</h3></div>
-                        <div class="card-body">
-                            <textarea id="diagnosis-input" placeholder="e.g., engine making loud knocking noise when accelerating, blue smoke from exhaust..." rows="4"></textarea>
-                            <div class="diagnosis-filters">
-                                <select id="diag-vehicle-type">
-                                    <option value="">All Vehicle Types</option>
-                                    <option value="Car">Car</option>
-                                    <option value="Bike">Bike</option>
-                                    <option value="SUV">SUV</option>
-                                    <option value="Truck">Truck</option>
-                                </select>
-                                <select id="diag-vehicle-model">
-                                    <option value="">All Models</option>
-                                </select>
-                                <button id="diagnose-btn" class="btn btn-primary">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-                                    Run Diagnosis
-                                </button>
-                            </div>
+                <div class="form-body">
+                    <div class="input-group">
+                        <label>Password</label>
+                        <div class="input-wrapper">
+                            <input type="password" id="admin-password" placeholder="Enter admin password" autocomplete="off">
+                            <button class="toggle-pass" onclick="togglePassword()" type="button">
+                                <svg id="eye-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            </button>
                         </div>
                     </div>
+                    <div class="error-msg hidden" id="error-msg">Invalid password. Please try again.</div>
+                    <button class="btn-login" id="login-btn" onclick="loginAdmin()">
+                        <span>Access Admin Panel</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </button>
                 </div>
-                <div class="diagnosis-results" id="diagnosis-results"></div>
+                <div class="form-footer">
+                    <span class="hint">Default password: <code>automech2024</code></span>
+                </div>
             </div>
-        </section>
+        </div>
 
-        <!-- ===== PAGE: Job Cards ===== -->
-        <section id="page-jobcards" class="page">
-            <div class="page-header">
-                <h2>Job Cards</h2>
-                <p>Manage vehicle repair job cards</p>
-                <button id="new-jobcard-btn" class="btn btn-primary">+ New Job Card</button>
-            </div>
-            <div class="filter-bar">
-                <button class="filter-chip active" data-filter="all">All</button>
-                <button class="filter-chip" data-filter="Pending">Pending</button>
-                <button class="filter-chip" data-filter="In Progress">In Progress</button>
-                <button class="filter-chip" data-filter="Completed">Completed</button>
-            </div>
-            <div class="table-container" id="jobcards-table"></div>
-        </section>
-
-        <!-- ===== PAGE: Mechanics ===== -->
-        <section id="page-mechanics" class="page">
-            <div class="page-header">
-                <h2>Mechanic Management</h2>
-                <p>Add and manage your garage mechanics</p>
-                <button id="add-mechanic-btn" class="btn btn-primary">+ Add Mechanic</button>
-            </div>
-            <div class="mechanics-grid" id="mechanics-grid"></div>
-        </section>
-
-        <!-- ===== PAGE: Inventory ===== -->
-        <section id="page-inventory" class="page">
-            <div class="page-header">
-                <h2>Parts Inventory</h2>
-                <p>Track spare parts stock and manage inventory</p>
-            </div>
-            <div class="search-bar">
-                <input type="text" id="inventory-search" placeholder="Search parts by name, category, or ID...">
-            </div>
-            <div class="table-container" id="inventory-table"></div>
-        </section>
-
-        <!-- ===== PAGE: Dealers ===== -->
-        <section id="page-dealers" class="page">
-            <div class="page-header">
-                <h2>Spare Part Dealers</h2>
-                <p>Manage your spare part suppliers</p>
-                <button id="add-dealer-btn" class="btn btn-primary">+ Add Dealer</button>
-            </div>
-            <div class="dealers-grid" id="dealers-grid"></div>
-        </section>
-
-        <!-- ===== PAGE: Pipeline ===== -->
-        <section id="page-pipeline" class="page">
-            <div class="page-header">
-                <h2>Work Pipeline</h2>
-                <p>Mechanic workload and task pipeline</p>
-            </div>
-            <div class="pipeline-container" id="pipeline-container"></div>
-        </section>
-
-        <!-- ===== PAGE: Notifications ===== -->
-        <section id="page-notifications" class="page">
-            <div class="page-header">
-                <h2>Notification Log</h2>
-                <p>Telegram messages and system notifications</p>
-            </div>
-            <div class="notifications-list" id="notifications-list"></div>
-        </section>
-    </main>
-
-    <!-- Modal Overlay -->
-    <div id="modal-overlay" class="modal-overlay hidden">
-        <div class="modal" id="modal">
-            <div class="modal-header">
-                <h3 id="modal-title"></h3>
-                <button class="modal-close" id="modal-close">&times;</button>
-            </div>
-            <div class="modal-body" id="modal-body"></div>
-            <div class="modal-footer" id="modal-footer"></div>
+        <!-- Footer -->
+        <div class="login-footer">
+            <span>AutoMech AI &copy; 2024 &mdash; Voice-Powered Garage Intelligence</span>
         </div>
     </div>
 
-    <!-- Floating HUD Indicator -->
-    <div class="float-indicator">
-        <div class="dot"></div>
-        <span>AutoMech AI · Online</span>
-    </div>
-
-    <!-- Visual Effects Engine -->
+    <!-- Particle Script -->
     <script>
-    (function() {
-        // ━━━ 1. ENHANCED PARTICLE NETWORK (Mouse Interactive) ━━━
-        const canvas = document.getElementById('particle-canvas');
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-        const PARTICLE_COUNT = 60;
-        let mouse = { x: -999, y: -999 };
-
-        function resize() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resize);
-        resize();
-
-        document.addEventListener('mousemove', (e) => {
-            mouse.x = e.clientX;
-            mouse.y = e.clientY;
-        });
-
-        class Particle {
-            constructor() { this.reset(); }
-            reset() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.vx = (Math.random() - 0.5) * 0.35;
-                this.vy = (Math.random() - 0.5) * 0.35;
-                this.radius = Math.random() * 1.8 + 0.3;
-                this.baseOpacity = Math.random() * 0.4 + 0.1;
-                this.opacity = this.baseOpacity;
-                this.hue = [195, 220, 270, 300][Math.floor(Math.random() * 4)];
-            }
-            update() {
-                // Mouse repulsion
-                const dx = this.x - mouse.x;
-                const dy = this.y - mouse.y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist < 120) {
-                    const force = (120 - dist) / 120 * 0.8;
-                    this.vx += (dx / dist) * force;
-                    this.vy += (dy / dist) * force;
-                    this.opacity = Math.min(0.8, this.baseOpacity + 0.4);
-                } else {
-                    this.opacity += (this.baseOpacity - this.opacity) * 0.05;
-                }
-                // Damping
-                this.vx *= 0.99;
-                this.vy *= 0.99;
-                this.x += this.vx;
-                this.y += this.vy;
-                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-            }
-            draw() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = `hsla(${this.hue}, 100%, 70%, ${this.opacity})`;
-                ctx.shadowBlur = 8;
-                ctx.shadowColor = `hsla(${this.hue}, 100%, 70%, 0.3)`;
-                ctx.fill();
-                ctx.shadowBlur = 0;
-            }
-        }
-
-        for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Particle());
-
-        function drawConnections() {
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    const dx = particles[i].x - particles[j].x;
-                    const dy = particles[i].y - particles[j].y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 160) {
-                        const alpha = (1 - dist / 160) * 0.1;
-                        ctx.beginPath();
-                        ctx.moveTo(particles[i].x, particles[i].y);
-                        ctx.lineTo(particles[j].x, particles[j].y);
-                        ctx.strokeStyle = `rgba(0, 229, 255, ${alpha})`;
-                        ctx.lineWidth = 0.6;
-                        ctx.stroke();
-                    }
-                }
-            }
-            // Mouse connections
-            if (mouse.x > 0) {
-                particles.forEach(p => {
-                    const dx = p.x - mouse.x;
-                    const dy = p.y - mouse.y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 180) {
-                        const alpha = (1 - dist / 180) * 0.15;
-                        ctx.beginPath();
-                        ctx.moveTo(p.x, p.y);
-                        ctx.lineTo(mouse.x, mouse.y);
-                        ctx.strokeStyle = `rgba(176, 72, 255, ${alpha})`;
-                        ctx.lineWidth = 0.4;
-                        ctx.stroke();
-                    }
-                });
-            }
-        }
-
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => { p.update(); p.draw(); });
-            drawConnections();
-            requestAnimationFrame(animateParticles);
-        }
-        animateParticles();
-
-        // ━━━ 2. DATA RAIN EFFECT ━━━
-        const rainCanvas = document.getElementById('rain-canvas');
-        if (rainCanvas) {
-            const rCtx = rainCanvas.getContext('2d');
-            const chars = '01アイウエオカキクケコ▓▒░█▄▀';
-            let columns, drops;
-
-            function initRain() {
-                rainCanvas.width = window.innerWidth;
-                rainCanvas.height = window.innerHeight;
-                const fontSize = 14;
-                columns = Math.floor(rainCanvas.width / fontSize);
-                drops = Array(columns).fill(1);
-            }
-            initRain();
-            window.addEventListener('resize', initRain);
-
-            function drawRain() {
-                rCtx.fillStyle = 'rgba(3, 6, 13, 0.06)';
-                rCtx.fillRect(0, 0, rainCanvas.width, rainCanvas.height);
-                rCtx.fillStyle = 'rgba(0, 229, 255, 0.35)';
-                rCtx.font = '14px JetBrains Mono, monospace';
-                for (let i = 0; i < drops.length; i++) {
-                    const text = chars[Math.floor(Math.random() * chars.length)];
-                    rCtx.fillText(text, i * 14, drops[i] * 14);
-                    if (drops[i] * 14 > rainCanvas.height && Math.random() > 0.985) {
-                        drops[i] = 0;
-                    }
-                    drops[i]++;
-                }
-                requestAnimationFrame(drawRain);
-            }
-            drawRain();
-        }
-
-        // ━━━ 3. HOLOGRAPHIC TILT EFFECT ━━━
-        function addHoloTilt() {
-            document.querySelectorAll('.stat-card, .mechanic-card, .dealer-card, .diagnosis-result').forEach(card => {
-                if (card.classList.contains('holo-ready')) return;
-                card.classList.add('holo-ready');
-                const shine = document.createElement('div');
-                shine.classList.add('holo-shine');
-                card.style.position = 'relative';
-                card.appendChild(shine);
-
-                card.addEventListener('mousemove', (e) => {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-                    const rotateX = (y - centerY) / centerY * -6;
-                    const rotateY = (x - centerX) / centerX * 6;
-                    card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
-                    shine.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(0,229,255,0.06), rgba(176,72,255,0.03), transparent 60%)`;
-                    shine.style.opacity = '1';
-                });
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) scale(1)';
-                    shine.style.opacity = '0';
-                });
-            });
-        }
-
-        // ━━━ 4. ANIMATED COUNTERS ━━━
-        function animateCounters() {
-            document.querySelectorAll('.stat-value').forEach(el => {
-                if (el.dataset.animated) return;
-                const text = el.textContent.trim();
-                const match = text.match(/^(\d+)/);
-                if (match) {
-                    el.dataset.animated = 'true';
-                    const target = parseInt(match[1]);
-                    const suffix = text.slice(match[1].length);
-                    let current = 0;
-                    const step = Math.max(1, Math.ceil(target / 30));
-                    const interval = setInterval(() => {
-                        current = Math.min(current + step, target);
-                        el.textContent = current + suffix;
-                        if (current >= target) clearInterval(interval);
-                    }, 30);
-                }
-            });
-        }
-
-        // ━━━ 5. AUTO-APPLY VISUAL CLASSES ━━━
-        function applyVisualEnhancements() {
-            // Glitch text on page headers
-            document.querySelectorAll('.page-header h2').forEach(h => {
-                if (!h.classList.contains('glitch-text')) {
-                    h.classList.add('glitch-text');
-                    h.setAttribute('data-text', h.textContent);
-                }
-            });
-            // HUD corners on dashboard cards
-            document.querySelectorAll('.dashboard-grid .card').forEach(c => {
-                c.classList.add('hud-card');
-            });
-            // Stagger animation on grids
-            document.querySelectorAll('.stats-grid, .mechanics-grid, .dealers-grid').forEach(g => {
-                g.classList.add('stagger-in');
-            });
-            // Neon border on top diagnosis result
-            document.querySelectorAll('.diagnosis-result.top-result').forEach(r => {
-                r.classList.add('neon-border');
-            });
-            // Holographic tilt
-            addHoloTilt();
-            // Animated counters
-            animateCounters();
-        }
-
-        // Run on load and observe DOM changes
-        applyVisualEnhancements();
-        const observer = new MutationObserver(() => {
-            applyVisualEnhancements();
-        });
-        observer.observe(document.getElementById('main-content'), {
-            childList: true, subtree: true
-        });
-
+    (function(){
+        const c=document.getElementById('login-particles');if(!c)return;
+        const x=c.getContext('2d');let ps=[];const N=45;let mx=-999,my=-999;
+        function rz(){c.width=innerWidth;c.height=innerHeight}
+        addEventListener('resize',rz);rz();
+        addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY});
+        class P{constructor(){this.r()}
+            r(){this.x=Math.random()*c.width;this.y=Math.random()*c.height;
+                this.vx=(Math.random()-.5)*.4;this.vy=(Math.random()-.5)*.4;
+                this.s=Math.random()*2+.5;this.o=Math.random()*.3+.1;
+                this.h=[195,220,270][Math.floor(Math.random()*3)]}
+            u(){let dx=this.x-mx,dy=this.y-my,d=Math.sqrt(dx*dx+dy*dy);
+                if(d<100){let f=(100-d)/100*.6;this.vx+=dx/d*f;this.vy+=dy/d*f}
+                this.vx*=.99;this.vy*=.99;this.x+=this.vx;this.y+=this.vy;
+                if(this.x<0||this.x>c.width)this.vx*=-1;
+                if(this.y<0||this.y>c.height)this.vy*=-1}
+            d(){x.beginPath();x.arc(this.x,this.y,this.s,0,Math.PI*2);
+                x.fillStyle=`hsla(${this.h},100%,70%,${this.o})`;
+                x.shadowBlur=6;x.shadowColor=`hsla(${this.h},100%,70%,.3)`;
+                x.fill();x.shadowBlur=0}}
+        for(let i=0;i<N;i++)ps.push(new P);
+        function dr(){x.clearRect(0,0,c.width,c.height);
+            ps.forEach(p=>{p.u();p.d()});
+            for(let i=0;i<ps.length;i++)for(let j=i+1;j<ps.length;j++){
+                let dx=ps[i].x-ps[j].x,dy=ps[i].y-ps[j].y,d=Math.sqrt(dx*dx+dy*dy);
+                if(d<140){x.beginPath();x.moveTo(ps[i].x,ps[i].y);x.lineTo(ps[j].x,ps[j].y);
+                    x.strokeStyle=`rgba(0,229,255,${(1-d/140)*.08})`;x.lineWidth=.5;x.stroke()}}
+            requestAnimationFrame(dr)}
+        dr()
     })();
     </script>
 
-    <script src="/js/api.js"></script>
-    <script src="/js/voice-engine.js"></script>
-    <script src="/js/app.js"></script>
+    <!-- Login Logic -->
+    <script>
+    function selectRole(role) {
+        if (role === 'staff') {
+            window.location.href = '/assistant.html';
+        } else {
+            document.getElementById('role-cards').classList.add('hidden');
+            document.getElementById('admin-form').classList.remove('hidden');
+            document.getElementById('admin-password').focus();
+        }
+    }
+
+    function goBack() {
+        document.getElementById('admin-form').classList.add('hidden');
+        document.getElementById('role-cards').classList.remove('hidden');
+        document.getElementById('error-msg').classList.add('hidden');
+        document.getElementById('admin-password').value = '';
+    }
+
+    function togglePassword() {
+        const input = document.getElementById('admin-password');
+        input.type = input.type === 'password' ? 'text' : 'password';
+    }
+
+    async function loginAdmin() {
+        const password = document.getElementById('admin-password').value.trim();
+        if (!password) return;
+        const btn = document.getElementById('login-btn');
+        btn.disabled = true;
+        btn.innerHTML = '<span>Authenticating...</span>';
+
+        try {
+            const res = await fetch('/api/admin/login', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({password})
+            });
+            const data = await res.json();
+            if (data.success) {
+                sessionStorage.setItem('admin_role', data.admin.role);
+                sessionStorage.setItem('admin_name', data.admin.name);
+                window.location.href = '/admin/';
+            } else {
+                document.getElementById('error-msg').classList.remove('hidden');
+                document.getElementById('admin-password').value = '';
+                document.getElementById('admin-password').focus();
+            }
+        } catch (e) {
+            document.getElementById('error-msg').classList.remove('hidden');
+        }
+        btn.disabled = false;
+        btn.innerHTML = '<span>Access Admin Panel</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+    }
+
+    // Enter key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && !document.getElementById('admin-form').classList.contains('hidden')) {
+            loginAdmin();
+        }
+    });
+    </script>
 </body>
 </html>
