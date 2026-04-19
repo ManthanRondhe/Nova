@@ -87,8 +87,20 @@ class AdminService:
         """Authenticate admin by password. Returns admin info or None."""
         hashed = self._hash_password(password)
         admins = self._read_csv(self.admin_users_file)
+        
+        # Lazy Migration: if user uses new password, update old db hashes instantly
+        old_hashed = self._hash_password("automech2024")
+        if password == "nova2024":
+            needs_update = False
+            for admin in admins:
+                if admin.get("password_hash") == old_hashed:
+                    admin["password_hash"] = hashed
+                    needs_update = True
+            if needs_update:
+                self._write_csv(self.admin_users_file, self.admin_headers, admins)
+
         for admin in admins:
-            if admin["password_hash"] == hashed:
+            if admin.get("password_hash") == hashed:
                 if role and admin["role"] != role and admin["role"] != "super_admin":
                     continue
                 return {"admin_id": admin["admin_id"], "name": admin["name"], "role": admin["role"]}
