@@ -1,5 +1,5 @@
 """
-AutoMech AI - FastAPI Main Application
+Nova AI - FastAPI Main Application
 """
 import os, sys
 from fastapi import FastAPI
@@ -476,7 +476,7 @@ async def process_voice(data: dict):
         return {"response": response, "action": "dashboard", "data": {"jobcard_stats": stats, "inventory_stats": inv}}
     
     elif any(kw in text for kw in ["hello", "hi", "hey", "good morning", "good afternoon"]):
-        return {"response": "Morning junior! I'm AutoMech AI, the senior master tech here. Tell me the symptoms, and I'll walk you through the diagnosis step by step. What are we working on today?", 
+        return {"response": "Morning junior! I'm Nova AI, the senior master tech here. Tell me the symptoms, and I'll walk you through the diagnosis step by step. What are we working on today?", 
                 "action": "greeting", "data": {}}
     
     elif any(kw in text for kw in ["thank", "thanks", "bye", "goodbye"]):

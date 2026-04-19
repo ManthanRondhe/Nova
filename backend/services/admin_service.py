@@ -1,5 +1,5 @@
 """
-AutoMech AI - Admin Service
+Nova AI - Admin Service
 Handles attendance, salary, performance analytics, insurance, and admin features.
 """
 import csv, os, hashlib
@@ -70,13 +70,13 @@ class AdminService:
     def _seed_default_admins(self):
         defaults = [
             {"admin_id": "ADM-001", "name": "Admin", "role": "super_admin",
-             "password_hash": self._hash_password("automech2024")},
+             "password_hash": self._hash_password("nova2024")},
             {"admin_id": "ADM-002", "name": "Accountant", "role": "accountant",
-             "password_hash": self._hash_password("automech2024")},
+             "password_hash": self._hash_password("nova2024")},
             {"admin_id": "ADM-003", "name": "Mechanic Head", "role": "mechanic_head",
-             "password_hash": self._hash_password("automech2024")},
+             "password_hash": self._hash_password("nova2024")},
             {"admin_id": "ADM-004", "name": "Insurance Admin", "role": "insurance_admin",
-             "password_hash": self._hash_password("automech2024")},
+             "password_hash": self._hash_password("nova2024")},
         ]
         self._write_csv(self.admin_users_file, self.admin_headers, defaults)
 

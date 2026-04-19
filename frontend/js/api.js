@@ -1,8 +1,8 @@
 /**
- * AutoMech AI - API Client
+ * Nova AI - API Client
  * Handles all communication with the FastAPI backend
  */
-// TODO: To deploy, change this URL to your Render backend URL (e.g. 'https://automech-backend.onrender.com/api')
+// TODO: To deploy, change this URL to your Render backend URL (e.g. 'https://nova-backend.onrender.com/api')
 // Automatically use the current hostname if deployed, otherwise fallback to local backend for testing
 const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
 // IMPORTANT: Replace this placeholder with your actual Render URL later!

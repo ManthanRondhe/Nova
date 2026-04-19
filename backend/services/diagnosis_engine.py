@@ -1,5 +1,5 @@
 """
-AutoMech AI - Diagnosis Engine
+Nova AI - Diagnosis Engine
 Multi-model fusion: TF-IDF + Fuzzy Matching + Keyword Extraction
 """
 import pandas as pd

@@ -1,5 +1,5 @@
 """
-AutoMech AI - Notification Service
+Nova AI - Notification Service
 Sends notifications to mechanics and dealers via Telegram Bot.
 """
 import requests
@@ -74,7 +74,7 @@ class NotificationService:
         """Send job assignment notification to mechanic."""
         parts_text = jobcard.get("required_parts", "None specified")
         
-        message = f"""🔧 <b>NEW JOB ASSIGNMENT — AutoMech AI</b>
+        message = f"""🔧 <b>NEW JOB ASSIGNMENT — Nova AI</b>
 
 📋 <b>Job Card:</b> {jobcard.get('jobcard_id', 'N/A')}
 🚗 <b>Vehicle:</b> {jobcard.get('vehicle_make', '')} {jobcard.get('vehicle_model', '')} {jobcard.get('vehicle_year', '')}
@@ -102,7 +102,7 @@ Reply /done {jobcard.get('jobcard_id', '')} when complete."""
     
     def notify_dealer_order(self, dealer, order):
         """Send order notification to dealer."""
-        message = f"""📦 <b>NEW PARTS ORDER — AutoMech AI</b>
+        message = f"""📦 <b>NEW PARTS ORDER — Nova AI</b>
 
 🔖 <b>Order:</b> {order.get('order_id', 'N/A')}
 🏭 <b>Part:</b> {order.get('part_name', 'N/A')} ({order.get('part_id', '')})
@@ -120,7 +120,7 @@ Reply /confirm {order.get('order_id', '')} to confirm."""
     
     def notify_job_completion(self, owner_phone, jobcard):
         """Notify vehicle owner about job completion."""
-        message = f"""✅ <b>VEHICLE READY — AutoMech AI</b>
+        message = f"""✅ <b>VEHICLE READY — Nova AI</b>
 
 Your vehicle {jobcard.get('vehicle_make', '')} {jobcard.get('vehicle_model', '')} 
 (Reg: {jobcard.get('vehicle_reg', '')}) has been serviced.

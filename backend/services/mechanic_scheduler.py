@@ -1,5 +1,5 @@
 """
-AutoMech AI - Mechanic Scheduler
+Nova AI - Mechanic Scheduler
 Handles mechanic management, auto-assignment, and pipeline optimization.
 """
 import csv, os

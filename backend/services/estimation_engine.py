@@ -1,5 +1,5 @@
 """
-AutoMech AI - Estimation Engine
+Nova AI - Estimation Engine
 Calculates cost and time estimates for repairs.
 """
 import csv, os

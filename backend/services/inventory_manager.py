@@ -1,5 +1,5 @@
 """
-AutoMech AI - Inventory Manager
+Nova AI - Inventory Manager
 Tracks spare parts stock, detects low levels, manages restocking.
 """
 import csv, os

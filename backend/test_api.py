@@ -1,4 +1,4 @@
-"""Quick API test for AutoMech AI"""
+"""Quick API test for Nova AI"""
 import requests, json
 
 BASE = "http://localhost:8000/api"

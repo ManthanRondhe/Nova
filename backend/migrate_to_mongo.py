@@ -1,5 +1,5 @@
 """
-AutoMech AI - CSV to MongoDB Migration Script
+Nova AI - CSV to MongoDB Migration Script
 Run this script once to migrate all your existing CSV data to MongoDB.
 """
 import os, sys, csv

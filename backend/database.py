@@ -1,5 +1,5 @@
 """
-AutoMech AI - Database Adapter
+Nova AI - Database Adapter
 """
 from pymongo import MongoClient
 import sys
@@ -22,8 +22,8 @@ def get_db():
         client = MongoClient(config.MONGO_URI, serverSelectionTimeoutMS=5000)
         # Check connection
         client.admin.command('ping')
-        # Extract DB name from URI or default to 'automech'
-        db_name = client.get_database().name or "automech"
+        # Extract DB name from URI or default to 'nova'
+        db_name = client.get_database().name or "nova"
         db = client[db_name]
         return db
     except Exception as e:

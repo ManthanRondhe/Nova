@@ -1,5 +1,5 @@
 /**
- * AutoMech AI — Admin API Client
+ * Nova AI — Admin API Client
  */
 // Automatically use the current hostname if deployed, otherwise fallback to local backend for testing
 const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';

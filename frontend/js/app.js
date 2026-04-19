@@ -1,5 +1,5 @@
 /**
- * AutoMech AI - Main Application Controller
+ * Nova AI - Main Application Controller
  * Wires voice engine, API, and UI together
  */
 document.addEventListener('DOMContentLoaded', () => {

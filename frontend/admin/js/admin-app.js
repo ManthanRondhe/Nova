@@ -1,5 +1,5 @@
 /**
- * AutoMech AI — Admin Dashboard Application
+ * Nova AI — Admin Dashboard Application
  */
 document.addEventListener('DOMContentLoaded', () => {
     const $ = s => document.querySelector(s);

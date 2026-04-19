@@ -1,5 +1,5 @@
 /**
- * AutoMech AI - Voice Engine
+ * Nova AI - Voice Engine
  * Web Speech API for voice input/output with automotive jargon correction
  */
 class VoiceEngine {

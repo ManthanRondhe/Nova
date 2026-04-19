@@ -1,5 +1,5 @@
 """
-AutoMech AI - Job Card Manager
+Nova AI - Job Card Manager
 Handles job card CRUD operations with auto-assignment.
 """
 import csv, os, uuid

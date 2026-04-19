@@ -1,5 +1,5 @@
 """
-AutoMech AI - Order Manager
+Nova AI - Order Manager
 Auto-generates spare part orders linked to dealers.
 """
 import csv, os

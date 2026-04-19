@@ -1,5 +1,5 @@
 """
-AutoMech AI - Configuration
+Nova AI - Configuration
 """
 import os
 from dotenv import load_dotenv
@@ -8,7 +8,7 @@ load_dotenv()
 
 class Config:
     # Application
-    APP_NAME = "AutoMech AI"
+    APP_NAME = "Nova AI"
     VERSION = "1.0.0"
     
     # Telegram Bot Configuration
@@ -36,7 +36,7 @@ class Config:
     LABOUR_RATE_PER_HOUR = 500
     
     # Admin Panel
-    ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "automech2024")
+    ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD", "nova2024")
     ADMIN_TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_ADMIN_CHAT_ID", "")
     DEFAULT_BASE_SALARY = int(os.environ.get("DEFAULT_BASE_SALARY", "15000"))
     EMPLOYEE_OF_YEAR_BONUS = int(os.environ.get("EMPLOYEE_OF_YEAR_BONUS", "5000"))

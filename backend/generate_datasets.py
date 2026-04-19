@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-AutoMech AI - Comprehensive Automotive Dataset Generator
+Nova AI - Comprehensive Automotive Dataset Generator
 Generates all CSV datasets for the diagnostic knowledge base.
 Run: python generate_datasets.py
 """
@@ -971,7 +971,7 @@ def generate_template_csvs():
 
 if __name__ == "__main__":
     print("=" * 60)
-    print("  AutoMech AI - Dataset Generator")
+    print("  Nova AI - Dataset Generator")
     print("=" * 60)
     total = generate_vehicle_faults()
     generate_spare_parts()
