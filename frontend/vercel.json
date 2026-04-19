@@ -1,4 +1,9 @@
 {
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/", "destination": "/login.html" },
+    { "source": "/assistant", "destination": "/index.html" },
+    { "source": "/admin", "destination": "/admin/index.html" }
+  ]
 }
