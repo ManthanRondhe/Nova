@@ -81,5 +81,10 @@ const adminApi = {
     getExpiringInsurance(days = 30) { return this._fetch(`/insurance/expiring?days=${days}`); },
 
     // Mechanics (from main API)
-    getMechanics() { return fetch('/api/mechanics').then(r => r.json()); },
+    getMechanics() { 
+        const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+        const RENDER_BACKEND_URL = 'https://nova-backend-ftga.onrender.com';
+        const base = isLocalhost ? 'http://localhost:8000/api' : `${RENDER_BACKEND_URL}/api`;
+        return fetch(`${base}/mechanics`).then(r => r.json()); 
+    },
 };
