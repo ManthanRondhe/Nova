@@ -496,10 +496,12 @@ async def process_voice(data: dict):
             primary_symptom = symptoms[0].strip() if symptoms else "any other signs"
             
             if not is_answering_followup and top['confidence'] < 0.50:
-                response = f"Hmm, that's not enough to go on, junior. I need more details. Are you also noticing {primary_symptom}?"
+                follow_up = top.get('followup_question', f"Are you also noticing {primary_symptom}?")
+                response = f"Hmm, that's not enough to go on, junior. I need more details. {follow_up}"
                 action = "diagnosis_followup"
-            elif not is_answering_followup and top['confidence'] < 0.85: # Changed threshold to 85% so it guides more often
-                response = f"Alright, listen up. My gut says this is {top['fault_name']}, but let's not guess. First step: {first_step}. Can you check that and tell me what you find?"
+            elif not is_answering_followup and top['confidence'] < 0.85: 
+                follow_up = top.get('followup_question', f"First step: {first_step}. Can you check that and tell me what you find?")
+                response = f"Alright, listen up. My gut says this is {top['fault_name']}, but let's not guess. {follow_up}"
                 action = "diagnosis_followup"
             else:
                 prefix = "Good job checking that. Based on your findings, " if is_answering_followup else "This is a textbook case. "
@@ -537,9 +539,11 @@ async def process_voice(data: dict):
             primary_symptom = symptoms[0].strip() if symptoms else "similar issues"
             
             if top['confidence'] < 0.60:
-                response = f"I'm catching hints of {top['fault_name']}, but I need more details from you. Are you noticing {primary_symptom}?"
+                follow_up = top.get('followup_question', f"Are you noticing {primary_symptom}?")
+                response = f"I'm catching hints of {top['fault_name']}, but I need more details from you. {follow_up}"
             else:
-                response = f"We might be looking at {top['fault_name']}. Let's test that theory. {first_step}? Do that and report back."
+                follow_up = top.get('followup_question', f"{first_step}? Do that and report back.")
+                response = f"We might be looking at {top['fault_name']}. Let's test that theory. {follow_up}"
                 
             return {"response": response, "action": "diagnosis_followup", "data": {"results": results}}
         
