@@ -348,7 +348,13 @@ async def process_voice(data: dict):
         elif isinstance(msg, str):
             recent_user_msgs.append(msg)
             
-    is_answering_followup = "tell me what you find" in last_assistant_msg.lower() or "first step" in last_assistant_msg.lower()
+    is_answering_followup = (
+        "tell me what you find" in last_assistant_msg.lower() or 
+        "first step" in last_assistant_msg.lower() or
+        "catching hints of" in last_assistant_msg.lower() or
+        "need more details" in last_assistant_msg.lower() or
+        "let's not guess" in last_assistant_msg.lower()
+    )
     
     # Combine context with current text for better diagnosis if it's a diagnostic query
     full_text = " ".join(recent_user_msgs).lower() + " " + text if recent_user_msgs else text
@@ -484,10 +490,33 @@ async def process_voice(data: dict):
                 "action": "farewell", "data": {}}
 
     # 2. Intent classification - Priority 2: Context-aware Diagnosis
-    elif any(kw in full_text for kw in ["diagnose", "problem", "issue", "wrong", "fault", "symptom", "noise", "smoke", "leak", "not working", "not starting"]):
+    elif is_answering_followup or any(kw in full_text for kw in ["diagnose", "problem", "issue", "wrong", "fault", "symptom", "noise", "smoke", "leak", "not working", "not starting"]):
         results = diagnosis_engine.diagnose(full_text, top_n=3)
         if results:
             top = results[0]
+            
+            # --- CONFIDENCE BOOST LOGIC ---
+            user_confirmed = False
+            if is_answering_followup:
+                import re
+                followup_keywords = set(re.findall(r'\b\w{4,}\b', last_assistant_msg.lower()))
+                user_keywords = set(re.findall(r'\b\w{4,}\b', text.lower()))
+                is_positive = any(w in text.lower() for w in ["yes", "yeah", "yep", "it does", "it is", "exactly", "true", "correct"])
+                is_negative = any(w in text.lower() for w in ["no", "nope", "doesn't", "does not", "isn't", "is not", "false"])
+                
+                if (followup_keywords & user_keywords) or (is_positive and not is_negative):
+                    top['confidence'] = min(0.95, top['confidence'] + 0.40)
+                    user_confirmed = True
+                elif is_negative:
+                    # They denied it. Lower confidence.
+                    top['confidence'] = max(0.10, top['confidence'] - 0.40)
+
+            # Prevent repeating exact same question
+            if top.get('followup_question') and top['followup_question'] in last_assistant_msg and top['confidence'] < 0.85 and not user_confirmed:
+                # We asked this, they didn't confirm or deny clearly, but we can't ask it again.
+                top['confidence'] = 0.85
+            # --------------------------------
+            
             estimate = estimation_engine.estimate(top)
             
             # Senior Mechanic Persona Logic
@@ -495,11 +524,11 @@ async def process_voice(data: dict):
             symptoms = top.get('matched_symptom', '').split(',')
             primary_symptom = symptoms[0].strip() if symptoms else "any other signs"
             
-            if not is_answering_followup and top['confidence'] < 0.50:
+            if top['confidence'] < 0.50:
                 follow_up = top.get('followup_question', f"Are you also noticing {primary_symptom}?")
                 response = f"Hmm, that's not enough to go on, junior. I need more details. {follow_up}"
                 action = "diagnosis_followup"
-            elif not is_answering_followup and top['confidence'] < 0.85: 
+            elif top['confidence'] < 0.85: 
                 follow_up = top.get('followup_question', f"First step: {first_step}. Can you check that and tell me what you find?")
                 response = f"Alright, listen up. My gut says this is {top['fault_name']}, but let's not guess. {follow_up}"
                 action = "diagnosis_followup"
