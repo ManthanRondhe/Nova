@@ -5,7 +5,7 @@ Multi-model fusion: sklearn RandomForestClassifier + Internet Dataset
 import pandas as pd
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.naive_bayes import MultinomialNB
 from sklearn.pipeline import Pipeline
 import requests
 import os, re
@@ -55,19 +55,31 @@ class DiagnosisEngine:
         print(f"[*] Loaded {len(self.merged_df)} rows from merged internet datasets (Kaggle + HuggingFace)")
         print(f"[*] Loaded {len(self.local_df)} rows from local enrichment database")
         
-        # Combine both into a single training corpus
-        X_train = self.merged_df["symptom"].tolist() + self.local_df["symptom"].tolist()
-        y_train = self.merged_df["fault_name"].tolist() + self.local_df["fault_name"].tolist()
+        # Combine both into a single training corpus and DEDUPLICATE
+        # This is critical for Render deployment to avoid OOM and Timeouts
+        raw_X = self.merged_df["symptom"].tolist() + self.local_df["symptom"].tolist()
+        raw_y = self.merged_df["fault_name"].tolist() + self.local_df["fault_name"].tolist()
         
-        # Build & Train the ML Pipeline
-        print("[*] Training ML Pipeline (TfidfVectorizer + RandomForestClassifier)...")
+        # Zip, deduplicate based on symptoms, and unzip
+        unique_data = list(set(zip(raw_X, raw_y)))
+        X_train, y_train = zip(*unique_data)
+        
+        print(f"[*] Compressed {len(raw_X)} records into {len(X_train)} unique training patterns.")
+        
+        # Build & Train the ML Pipeline (Optimized for Production)
+        print("[*] Training ML Pipeline (TfidfVectorizer + MultinomialNB)...")
         self.pipeline = Pipeline([
-            ('tfidf', TfidfVectorizer(stop_words='english', ngram_range=(1, 3), max_features=10000, sublinear_tf=True)),
-            ('rf', RandomForestClassifier(n_estimators=100, random_state=42, class_weight='balanced'))
+            ('tfidf', TfidfVectorizer(
+                stop_words='english', 
+                ngram_range=(1, 2), 
+                max_features=5000, 
+                sublinear_tf=True
+            )),
+            ('nb', MultinomialNB(alpha=0.1))
         ])
         
         self.pipeline.fit(X_train, y_train)
-        print(f"[OK] ML Model trained on {len(X_train)} authentic records (internet + local).")
+        print(f"[OK] ML Model trained and ready on {len(X_train)} optimized patterns.")
         
     def diagnose(self, query, vehicle_type=None, vehicle_model=None, top_n=5):
         """
