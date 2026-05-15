@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Nova AI - Customer Service Portal">
+    <title>Nova AI - Customer Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/customer/css/style.css">
+</head>
+<body>
+
+    <!-- Top Bar -->
+    <header class="top-bar">
+        <div class="top-bar-inner">
+            <a href="/" class="logo">
+                <svg viewBox="0 0 36 36" fill="none" width="32" height="32">
+                    <circle cx="18" cy="18" r="16" stroke="url(#clg)" stroke-width="2"/>
+                    <path d="M12 18h12M18 12v12M13 13l10 10M23 13l-10 10" stroke="url(#clg)" stroke-width="1" stroke-linecap="round" opacity="0.5"/>
+                    <defs><linearGradient id="clg" x1="0" y1="0" x2="36" y2="36">
+                        <stop stop-color="#00e5ff"/><stop offset="0.5" stop-color="#0055ff"/><stop offset="1" stop-color="#b048ff"/>
+                    </linearGradient></defs>
+                </svg>
+                <div>
+                    <span class="logo-title">Nova AI</span>
+                    <span class="logo-sub">Customer Portal</span>
+                </div>
+            </a>
+            <nav id="main-nav">
+                <button class="nav-btn active" data-tab="home">Home</button>
+                <button class="nav-btn" data-tab="track">Track Vehicle</button>
+                <button class="nav-btn" data-tab="book">Book Service</button>
+            </nav>
+            <a href="/" class="back-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                Back
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- HOME TAB -->
+        <section class="tab-section active" data-tab="home">
+            <div class="hero">
+                <div class="hero-text">
+                    <div class="hero-tag"><span class="tag-dot"></span> AI-Powered Service</div>
+                    <h1>Your Vehicle,<br><span class="accent">Our Priority</span></h1>
+                    <p>Track repairs in real-time, book appointments, and get transparent quotations — all powered by Nova AI diagnostics.</p>
+                    <div class="hero-actions">
+                        <button class="btn btn-primary" onclick="switchTab('track')">Track My Vehicle</button>
+                        <button class="btn btn-outline" onclick="switchTab('book')">Book Service</button>
+                    </div>
+                </div>
+                <div class="hero-cards">
+                    <div class="float-card fc-1"><span class="fc-icon">🔧</span><span>AI Diagnostics</span></div>
+                    <div class="float-card fc-2"><span class="fc-icon">📍</span><span>Live Tracking</span></div>
+                    <div class="float-card fc-3"><span class="fc-icon">📋</span><span>Digital Reports</span></div>
+                    <div class="float-card fc-4"><span class="fc-icon">💰</span><span>Fair Pricing</span></div>
+                </div>
+            </div>
+            <div class="features-section">
+                <h2>What You Can Do</h2>
+                <div class="features-grid">
+                    <div class="feature-card" onclick="switchTab('track')">
+                        <div class="f-icon">🔍</div>
+                        <h3>Track Repairs</h3>
+                        <p>Search by registration number or job card ID to see real-time repair progress.</p>
+                    </div>
+                    <div class="feature-card" onclick="switchTab('book')">
+                        <div class="f-icon">📅</div>
+                        <h3>Book Appointment</h3>
+                        <p>Schedule a service appointment with our AI-assisted booking system.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="f-icon">📊</div>
+                        <h3>View Quotations</h3>
+                        <p>Get detailed breakdowns of parts, labour, and total costs for your repairs.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="f-icon">👨‍🔧</div>
+                        <h3>Mechanic Info</h3>
+                        <p>See who's working on your vehicle, their specialization, and track record.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="f-icon">🛡️</div>
+                        <h3>Service History</h3>
+                        <p>Access complete service records and past repairs for your vehicle.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="f-icon">🔔</div>
+                        <h3>Status Updates</h3>
+                        <p>Get notified when your vehicle moves through each stage of repair.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TRACK VEHICLE TAB -->
+        <section class="tab-section" data-tab="track">
+            <div class="section-head">
+                <h2>Track Your Vehicle</h2>
+                <p>Enter your vehicle registration number or job card ID to check repair status</p>
+            </div>
+            <div class="search-box">
+                <div class="search-toggle">
+                    <button class="toggle-btn active" data-type="reg">By Reg Number</button>
+                    <button class="toggle-btn" data-type="jc">By Job Card ID</button>
+                </div>
+                <div class="search-input-wrap">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                    <input type="text" id="search-input" placeholder="Enter registration number (e.g. MH-04-AB-1234)">
+                    <button class="btn btn-primary" id="search-btn" onclick="searchVehicle()">Search</button>
+                </div>
+            </div>
+
+            <!-- Search Results -->
+            <div id="search-results" class="results-area"></div>
+
+            <!-- Vehicle Detail View -->
+            <div id="vehicle-detail" class="detail-view hidden">
+                <button class="back-btn" onclick="backToResults()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    Back to Results
+                </button>
+                <div id="detail-banner" class="detail-banner"></div>
+                <div class="detail-grid">
+                    <div class="detail-card">
+                        <div class="dc-header"><span class="dc-icon">📍</span><h3>Repair Timeline</h3></div>
+                        <div id="timeline-body"></div>
+                    </div>
+                    <div class="detail-card">
+                        <div class="dc-header"><span class="dc-icon">👨‍🔧</span><h3>Assigned Mechanic</h3></div>
+                        <div id="mechanic-body"></div>
+                    </div>
+                    <div class="detail-card">
+                        <div class="dc-header"><span class="dc-icon">💰</span><h3>Quotation</h3></div>
+                        <div id="quotation-body"></div>
+                    </div>
+                    <div class="detail-card">
+                        <div class="dc-header"><span class="dc-icon">🔩</span><h3>Parts Used</h3></div>
+                        <div id="parts-body"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BOOK SERVICE TAB -->
+        <section class="tab-section" data-tab="book">
+            <div class="section-head">
+                <h2>Book a Service</h2>
+                <p>Fill in your vehicle details and we'll schedule a service appointment</p>
+            </div>
+            <div class="form-card">
+                <div class="form-section">
+                    <div class="fs-title"><span class="fs-icon">🚗</span><h3>Vehicle Information</h3></div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Make</label><input type="text" id="v-make" placeholder="e.g. Toyota"></div>
+                        <div class="form-group"><label>Model</label><input type="text" id="v-model" placeholder="e.g. Corolla"></div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Year</label><input type="text" id="v-year" placeholder="e.g. 2022"></div>
+                        <div class="form-group"><label>Registration</label><input type="text" id="v-reg" placeholder="e.g. MH-04-AB-1234"></div>
+                    </div>
+                </div>
+                <div class="form-section">
+                    <div class="fs-title"><span class="fs-icon">👤</span><h3>Owner Details</h3></div>
+                    <div class="form-row">
+                        <div class="form-group"><label>Full Name</label><input type="text" id="o-name" placeholder="Your name"></div>
+                        <div class="form-group"><label>Phone</label><input type="tel" id="o-phone" placeholder="Your phone number"></div>
+                    </div>
+                </div>
+                <div class="form-section">
+                    <div class="fs-title"><span class="fs-icon">⚠️</span><h3>Complaint / Issue</h3></div>
+                    <div class="form-group">
+                        <label>Describe the problem</label>
+                        <textarea id="v-complaint" rows="4" placeholder="Describe what's happening with your vehicle..."></textarea>
+                    </div>
+                </div>
+                <button class="btn btn-primary w-full" id="book-btn" onclick="bookService()">
+                    <span>Submit Booking</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Footer -->
+    <footer>Nova AI &copy; 2024 — Customer Service Portal</footer>
+
+    <script src="/customer/js/app.js"></script>
+</body>
+</html>

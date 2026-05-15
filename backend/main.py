@@ -726,6 +726,191 @@ async def expiring_insurance(days: int = 30):
     return {"expiring": admin_service.get_expiring_insurance(days)}
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# CUSTOMER PORTAL API
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+@app.post("/api/customer/lookup")
+async def customer_lookup(data: dict):
+    """Look up all job cards for a customer by phone number or vehicle registration."""
+    phone = data.get("phone", "").strip()
+    reg = data.get("vehicle_reg", "").strip()
+
+    if not phone and not reg:
+        return {"error": "Provide phone number or vehicle registration", "jobcards": []}
+
+    all_jcs = jobcard_manager.get_all_jobcards()
+    results = []
+    for jc in all_jcs:
+        if (phone and jc.get("owner_phone", "") == phone) or \
+           (reg and jc.get("vehicle_reg", "").upper() == reg.upper()):
+            results.append(jc)
+
+    status_order = {"In Progress": 0, "Pending": 1, "Completed": 2}
+    results.sort(key=lambda x: (status_order.get(x.get("status"), 9), x.get("created_at", "")), reverse=False)
+
+    return {"jobcards": results, "total": len(results)}
+
+@app.get("/api/customer/vehicle/{jc_id}")
+async def customer_vehicle_detail(jc_id: str):
+    """Get full vehicle detail for customer view — status, mechanic, parts, quotation."""
+    jc = jobcard_manager.get_jobcard(jc_id)
+    if not jc:
+        return {"error": "Job card not found"}
+
+    # Mechanic Info
+    mechanic_info = None
+    mid = jc.get("assigned_mechanic_id")
+    if mid:
+        mech = mechanic_scheduler.get_mechanic(mid)
+        if mech:
+            mechanic_info = {
+                "name": mech.get("name", ""),
+                "specialization": mech.get("specialization", ""),
+                "skill_level": mech.get("skill_level", ""),
+                "status": mech.get("status", ""),
+            }
+
+    # Parts Info
+    parts_info = []
+    required_parts_str = jc.get("required_parts", "")
+    if required_parts_str:
+        part_ids = [p.strip() for p in required_parts_str.split(",")]
+        for pid in part_ids:
+            part = inventory_manager.get_part_stock(pid)
+            if part:
+                parts_info.append({
+                    "part_id": pid,
+                    "name": part.get("part_name", "Unknown"),
+                    "category": part.get("category", ""),
+                    "unit_price": int(part.get("unit_price", 0)),
+                    "in_stock": int(part.get("current_stock", 0)) > 0,
+                })
+            else:
+                parts_info.append({"part_id": pid, "name": "Sourcing...", "category": "", "unit_price": 0, "in_stock": False})
+
+    # Quotation / Estimate
+    quotation = None
+    diag_fault = jc.get("diagnosis_fault", "")
+    if diag_fault:
+        est_cost = jc.get("estimated_cost", "")
+        est_time = jc.get("estimated_time", "")
+        parts_cost = sum(p.get("unit_price", 0) for p in parts_info)
+        try:
+            time_hrs = float(est_time) if est_time else 1.0
+        except ValueError:
+            time_hrs = 1.0
+        labour_cost = int(time_hrs * 500)
+
+        if est_cost and "-" in str(est_cost):
+            try:
+                c_parts = str(est_cost).split("-")
+                total_min = int(c_parts[0])
+                total_max = int(c_parts[1])
+            except (ValueError, IndexError):
+                total_min = parts_cost + labour_cost
+                total_max = int(total_min * 1.3)
+        else:
+            total_min = parts_cost + labour_cost
+            total_max = int(total_min * 1.3)
+
+        quotation = {
+            "fault": diag_fault,
+            "parts_cost": parts_cost,
+            "labour_hours": time_hrs,
+            "labour_rate": 500,
+            "labour_cost": labour_cost,
+            "total_min": total_min,
+            "total_max": total_max,
+            "actual_cost": jc.get("actual_cost", ""),
+        }
+
+    # Timeline
+    timeline = []
+    timeline.append({"step": "Received", "label": "Vehicle Received", "done": True, "time": jc.get("created_at", "")})
+    timeline.append({"step": "Diagnosed", "label": "Diagnosis Complete", "done": bool(diag_fault), "time": jc.get("created_at", "") if diag_fault else ""})
+    timeline.append({"step": "Assigned", "label": f"Mechanic: {jc.get('assigned_mechanic_name', 'TBD')}", "done": bool(mid), "time": jc.get("created_at", "") if mid else ""})
+    timeline.append({"step": "InProgress", "label": "Repair In Progress", "done": jc.get("status") in ("In Progress", "Completed"), "time": ""})
+    timeline.append({"step": "QualityCheck", "label": "Quality Check", "done": jc.get("status") == "Completed", "time": ""})
+    timeline.append({"step": "Ready", "label": "Ready for Pickup", "done": jc.get("status") == "Completed", "time": jc.get("completed_at", "")})
+
+    return {
+        "jobcard": {
+            "id": jc.get("jobcard_id"),
+            "status": jc.get("status"),
+            "priority": jc.get("priority"),
+            "bay_number": jc.get("bay_number"),
+            "vehicle": f"{jc.get('vehicle_make', '')} {jc.get('vehicle_model', '')}".strip(),
+            "vehicle_year": jc.get("vehicle_year", ""),
+            "vehicle_reg": jc.get("vehicle_reg", ""),
+            "complaint": jc.get("complaint", ""),
+            "fault": diag_fault,
+            "created_at": jc.get("created_at", ""),
+            "completed_at": jc.get("completed_at", ""),
+        },
+        "mechanic": mechanic_info,
+        "parts": parts_info,
+        "quotation": quotation,
+        "timeline": timeline,
+    }
+
+@app.post("/api/customer/book")
+async def customer_book_appointment(data: dict):
+    """Book a service appointment from the customer portal."""
+    owner_name = data.get("owner_name", "")
+    owner_phone = data.get("owner_phone", "")
+    vehicle_make = data.get("vehicle_make", "")
+    vehicle_model = data.get("vehicle_model", "")
+    vehicle_year = data.get("vehicle_year", "")
+    vehicle_reg = data.get("vehicle_reg", "")
+    complaint = data.get("complaint", "")
+    service_type = data.get("service_type", "General Service")
+
+    if not owner_name or not owner_phone:
+        return {"error": "Name and phone number are required"}
+    if not complaint:
+        complaint = service_type
+
+    # Run AI diagnosis behind the scenes
+    diagnosis = None
+    if complaint:
+        results = diagnosis_engine.diagnose(complaint, vehicle_make, vehicle_model)
+        if results:
+            diagnosis = results[0]
+
+    system = diagnosis_engine.detect_system(complaint) if complaint else None
+    mechanic = mechanic_scheduler.auto_assign(system, diagnosis.get("severity", "Medium") if diagnosis else "Medium")
+
+    jobcard = jobcard_manager.create_jobcard(
+        vehicle_make=vehicle_make,
+        vehicle_model=vehicle_model,
+        vehicle_year=vehicle_year,
+        vehicle_reg=vehicle_reg,
+        owner_name=owner_name,
+        owner_phone=owner_phone,
+        complaint=complaint,
+        diagnosis=diagnosis,
+        mechanic=mechanic
+    )
+
+    estimate = estimation_engine.estimate(diagnosis) if diagnosis else None
+
+    if mechanic:
+        task_desc = f"{diagnosis['fault_name']} - {complaint}" if diagnosis else complaint
+        mechanic_scheduler.add_to_pipeline(
+            mechanic["mechanic_id"], mechanic["name"],
+            jobcard["jobcard_id"], task_desc,
+            jobcard.get("priority", "Medium")
+        )
+
+    return {
+        "success": True,
+        "jobcard_id": jobcard["jobcard_id"],
+        "message": f"Appointment booked! Your tracking ID is {jobcard['jobcard_id']}",
+        "assigned_mechanic": mechanic.get("name") if mechanic else "Will be assigned soon",
+        "estimated_cost": f"₹{estimate['total_estimate_min']} - ₹{estimate['total_estimate_max']}" if estimate else "To be determined after inspection",
+    }
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 # SERVE FRONTEND STATIC FILES
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 frontend_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "frontend")
@@ -749,9 +934,19 @@ async def serve_admin():
     admin_file = os.path.join(frontend_dir, "admin", "index.html")
     return FileResponse(admin_file)
 
+# Serve customer portal at /customer/
+@app.get("/customer")
+@app.get("/customer/")
+async def serve_customer():
+    customer_file = os.path.join(frontend_dir, "customer", "index.html")
+    return FileResponse(customer_file)
+
 # Mount static assets
 if os.path.exists(frontend_dir):
     admin_dir = os.path.join(frontend_dir, "admin")
+    customer_dir = os.path.join(frontend_dir, "customer")
     if os.path.exists(admin_dir):
         app.mount("/admin", StaticFiles(directory=admin_dir, html=True), name="admin-frontend")
+    if os.path.exists(customer_dir):
+        app.mount("/customer", StaticFiles(directory=customer_dir, html=True), name="customer-frontend")
     app.mount("/", StaticFiles(directory=frontend_dir, html=False), name="frontend")

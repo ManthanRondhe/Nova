@@ -51,6 +51,23 @@
                 <div class="role-badge">No Password Required</div>
             </div>
 
+            <div class="role-card customer-card" id="card-customer" onclick="selectRole('customer')">
+                <div class="role-icon customer-icon">
+                    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="24" cy="14" r="8"/>
+                        <path d="M8 40v-2a16 16 0 0132 0v2"/>
+                        <path d="M24 26v6M20 30h8" stroke-width="1.5" opacity="0.5"/>
+                    </svg>
+                </div>
+                <h2>Customer Portal</h2>
+                <p>Track your vehicle repairs, view service history, quotations, and assigned mechanic details</p>
+                <div class="role-action">
+                    <span>Enter Portal</span>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+                </div>
+                <div class="role-badge customer-badge">Service Tracking</div>
+            </div>
+
             <div class="role-card admin-card" id="card-admin" onclick="selectRole('admin')">
                 <div class="role-icon admin-icon">
                     <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2">
@@ -156,6 +173,8 @@
     function selectRole(role) {
         if (role === 'staff') {
             window.location.href = '/assistant.html';
+        } else if (role === 'customer') {
+            window.location.href = '/customer/';
         } else {
             document.getElementById('role-cards').classList.add('hidden');
             document.getElementById('admin-form').classList.remove('hidden');
