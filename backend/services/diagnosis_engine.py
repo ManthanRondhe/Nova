@@ -103,7 +103,7 @@ class DiagnosisEngine:
             fault_name = classes[idx]
             
             # Strict confidence cutoff so it asks for more details if unsure
-            if confidence < 0.05:
+            if confidence < 0.01:
                 continue
                 
             if fault_name in seen_faults:

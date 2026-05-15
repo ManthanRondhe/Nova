@@ -481,16 +481,17 @@ async def process_voice(data: dict):
                    f"Inventory: {inv['low_stock_count']} low stock alerts.")
         return {"response": response, "action": "dashboard", "data": {"jobcard_stats": stats, "inventory_stats": inv}}
     
-    elif any(kw in text for kw in ["hello", "hi", "hey", "good morning", "good afternoon"]):
+    words = set(text.split())
+    if any(kw in words for kw in ["hello", "hi", "hey"]) or any(kw in text for kw in ["good morning", "good afternoon"]):
         return {"response": "Morning junior! I'm Nova AI, the senior master tech here. Tell me the symptoms, and I'll walk you through the diagnosis step by step. What are we working on today?", 
                 "action": "greeting", "data": {}}
     
-    elif any(kw in text for kw in ["thank", "thanks", "bye", "goodbye"]):
+    elif any(kw in words for kw in ["thank", "thanks", "bye", "goodbye"]) or any(kw in text for kw in ["thank you"]):
         return {"response": "You got it, junior. Keep learning and call me if you get stuck on the next one.", 
                 "action": "farewell", "data": {}}
 
     # 2. Intent classification - Priority 2: Context-aware Diagnosis
-    elif is_answering_followup or any(kw in full_text for kw in ["diagnose", "problem", "issue", "wrong", "fault", "symptom", "noise", "smoke", "leak", "not working", "not starting"]):
+    elif is_answering_followup or any(kw in full_text for kw in ["diagnose", "problem", "issue", "wrong", "fault", "symptom", "noise", "smoke", "leak", "not working", "not starting", "smell", "ac", "air", "brake", "gear", "vibrate", "battery", "dead", "pulls", "pulling", "hot", "warm"]):
         results = diagnosis_engine.diagnose(full_text, top_n=3)
         if results:
             top = results[0]
@@ -505,7 +506,7 @@ async def process_voice(data: dict):
                 is_negative = any(w in text.lower() for w in ["no", "nope", "doesn't", "does not", "isn't", "is not", "false"])
                 
                 if (followup_keywords & user_keywords) or (is_positive and not is_negative):
-                    top['confidence'] = min(0.95, top['confidence'] + 0.40)
+                    top['confidence'] = 0.95
                     user_confirmed = True
                 elif is_negative:
                     # They denied it. Lower confidence.
@@ -524,11 +525,11 @@ async def process_voice(data: dict):
             symptoms = top.get('matched_symptom', '').split(',')
             primary_symptom = symptoms[0].strip() if symptoms else "any other signs"
             
-            if top['confidence'] < 0.50:
+            if top['confidence'] < 0.05:
                 follow_up = top.get('followup_question', f"Are you also noticing {primary_symptom}?")
                 response = f"Hmm, that's not enough to go on, junior. I need more details. {follow_up}"
                 action = "diagnosis_followup"
-            elif top['confidence'] < 0.85: 
+            elif top['confidence'] < 0.10: 
                 follow_up = top.get('followup_question', f"First step: {first_step}. Can you check that and tell me what you find?")
                 response = f"Alright, listen up. My gut says this is {top['fault_name']}, but let's not guess. {follow_up}"
                 action = "diagnosis_followup"
@@ -561,13 +562,13 @@ async def process_voice(data: dict):
     else:
         # Try diagnosis as fallback using full context
         results = diagnosis_engine.diagnose(full_text, top_n=1)
-        if results and results[0].get("confidence", 0) > 0.2:
+        if results and results[0].get("confidence", 0) > 0.05:
             top = results[0]
             first_step = top.get('fix_procedure', 'Check the basics').split('.')[0]
             symptoms = top.get('matched_symptom', '').split(',')
             primary_symptom = symptoms[0].strip() if symptoms else "similar issues"
             
-            if top['confidence'] < 0.60:
+            if top['confidence'] < 0.10:
                 follow_up = top.get('followup_question', f"Are you noticing {primary_symptom}?")
                 response = f"I'm catching hints of {top['fault_name']}, but I need more details from you. {follow_up}"
             else:
