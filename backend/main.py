@@ -76,7 +76,9 @@ app.add_middleware(
 
 @app.on_event("startup")
 async def startup_event():
-    """Start Telegram bot listener on server startup."""
+    """Start Telegram bot listener on server startup (disabled on Vercel Serverless)."""
+    if os.environ.get("VERCEL"):
+        return
     if config.ENABLE_APPROVAL_WORKFLOW and config.TELEGRAM_ENABLED:
         telegram_bot_handler.start_polling()
 

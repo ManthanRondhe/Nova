@@ -2,8 +2,7 @@
 
 // Dynamic API Base
 const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-const RENDER_BACKEND_URL = 'https://nova-backend-ftga.onrender.com';
-const API_BASE = isLocalhost ? 'http://localhost:8000/api' : `${RENDER_BACKEND_URL}/api`;
+const API_BASE = isLocalhost ? 'http://localhost:8000/api' : '/api';
 
 // ━━━ Tab Navigation ━━━
 document.querySelectorAll('.nav-btn').forEach(btn => {

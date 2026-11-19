@@ -201,20 +201,23 @@ class DiagnosisEngine:
         # Check persistent model cache (invalidates automatically if training data changes)
         data_hash = hashlib.md5(f"{len(X_train)}_{X_train[0]}_{X_train[-1]}".encode()).hexdigest()[:12]
         cache_path = os.path.join(data_dir, f"trained_ensemble_{data_hash}.joblib")
+        tmp_cache_path = os.path.join("/tmp", f"trained_ensemble_{data_hash}.joblib") if os.path.exists("/tmp") else cache_path
 
         loaded_from_cache = False
-        if os.path.exists(cache_path):
-            try:
-                cached_bundle = joblib.load(cache_path)
-                self.vectorizer = cached_bundle["vectorizer"]
-                self.clf_svc = cached_bundle["clf_svc"]
-                self.clf_lr = cached_bundle["clf_lr"]
-                self.clf_nb = cached_bundle["clf_nb"]
-                self.classes_ = cached_bundle["classes_"]
-                loaded_from_cache = True
-                print(f"[OK] Loaded pre-trained Custom Hybrid ML Ensemble from disk cache ({cache_path}).")
-            except Exception:
-                loaded_from_cache = False
+        for c_path in (cache_path, tmp_cache_path):
+            if os.path.exists(c_path):
+                try:
+                    cached_bundle = joblib.load(c_path)
+                    self.vectorizer = cached_bundle["vectorizer"]
+                    self.clf_svc = cached_bundle["clf_svc"]
+                    self.clf_lr = cached_bundle["clf_lr"]
+                    self.clf_nb = cached_bundle["clf_nb"]
+                    self.classes_ = cached_bundle["classes_"]
+                    loaded_from_cache = True
+                    print(f"[OK] Loaded pre-trained Custom Hybrid ML Ensemble from disk cache ({c_path}).")
+                    break
+                except Exception:
+                    loaded_from_cache = False
 
         if not loaded_from_cache:
             print("[*] Training Custom Hybrid ML Ensemble (Word+Char TF-IDF + LinearSVC + LogisticRegression + MultinomialNB)...")
@@ -250,17 +253,22 @@ class DiagnosisEngine:
 
             self.classes_ = self.clf_lr.classes_
 
+            bundle = {
+                "vectorizer": self.vectorizer,
+                "clf_svc": self.clf_svc,
+                "clf_lr": self.clf_lr,
+                "clf_nb": self.clf_nb,
+                "classes_": self.classes_,
+            }
             try:
-                joblib.dump({
-                    "vectorizer": self.vectorizer,
-                    "clf_svc": self.clf_svc,
-                    "clf_lr": self.clf_lr,
-                    "clf_nb": self.clf_nb,
-                    "classes_": self.classes_,
-                }, cache_path)
+                joblib.dump(bundle, cache_path)
                 print(f"[OK] Saved trained ML Ensemble to {cache_path}")
-            except Exception as e:
-                print(f"[!] Could not cache model: {e}")
+            except Exception:
+                try:
+                    joblib.dump(bundle, tmp_cache_path)
+                    print(f"[OK] Saved trained ML Ensemble to {tmp_cache_path}")
+                except Exception as e:
+                    print(f"[!] Could not cache model: {e}")
 
         self.class_to_idx = {c: i for i, c in enumerate(self.classes_)}
         self.pipeline = SoftMarginEnsembleWrapper(self)

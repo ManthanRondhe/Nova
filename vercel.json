@@ -1,0 +1,11 @@
+{
+  "functions": {
+    "api/index.py": {
+      "maxDuration": 60,
+      "excludeFiles": "{auto-mech-ai-design/**,*.zip,backend/tests/**,backend/*.png}"
+    }
+  },
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/api/index.py" }
+  ]
+}

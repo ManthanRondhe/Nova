@@ -10,12 +10,17 @@ class CSVFallbackCollection:
         self.data_dir = data_dir
         self.csv_path = os.path.join(data_dir, f"{name}.csv")
 
+        # In serverless environments (e.g. Vercel), the source directory is read-only (/var/task);
+        # copy initial CSV to /tmp on write if needed, or read from /tmp if modified there.
+        self.tmp_csv_path = os.path.join("/tmp", f"nova_{name}.csv") if os.path.exists("/tmp") else self.csv_path
+
     def _read_rows(self):
-        if not os.path.exists(self.csv_path):
+        active_path = self.tmp_csv_path if os.path.exists(self.tmp_csv_path) else self.csv_path
+        if not os.path.exists(active_path):
             return []
         try:
             import json as _json
-            with open(self.csv_path, "r", encoding="utf-8") as f:
+            with open(active_path, "r", encoding="utf-8") as f:
                 reader = csv.DictReader(f)
                 rows = []
                 for r in reader:
@@ -65,7 +70,13 @@ class CSVFallbackCollection:
                 writer.writeheader()
                 writer.writerows(serialized)
         except Exception:
-            pass
+            try:
+                with open(self.tmp_csv_path, "w", newline="", encoding="utf-8") as f:
+                    writer = csv.DictWriter(f, fieldnames=fieldnames, extrasaction="ignore")
+                    writer.writeheader()
+                    writer.writerows(serialized)
+            except Exception:
+                pass
 
     def find(self, query=None, projection=None):
         rows = self._read_rows()
