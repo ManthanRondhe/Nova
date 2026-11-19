@@ -122,6 +122,116 @@ async function showDetail(jcId) {
                 <span class="status-badge ${statusClass}">${jc.status || 'Pending'}</span>
             </div>`;
 
+        // ━━━ Approval Card (Feature 2: Unbiased Diagnostics) ━━━
+        const approvalArea = document.getElementById('approval-card-area');
+        const approvalStat = data.approval_status || jc.approval_status || 'LEGACY_APPROVED';
+        const estData = data.estimate || quote || {};
+
+        if (approvalArea) {
+            if (approvalStat === 'PENDING_CUSTOMER_APPROVAL') {
+                const workItems = (estData.work_items || [
+                    'Independent diagnostic verification',
+                    `Repair procedure: ${jc.fault || 'Targeted automotive repair'}`,
+                    'Certified parts replacement & bench quality inspection',
+                    'Post-install calibration & road test validation'
+                ]);
+
+                approvalArea.innerHTML = `
+                <div class="approval-card">
+                    <div class="approval-header">
+                        <div class="approval-title-wrap">
+                            <span class="approval-icon">⚡</span>
+                            <div>
+                                <h3 class="approval-title">Approval Required: Independent Repair Estimate</h3>
+                                <div class="approval-subtitle">Verified & Audited by Sentinel AI Diagnostic Arbiter · Unbiased Anti-Overreplacement Guarantee</div>
+                                ${jc.customer_savings > 0 ? `<div style="display:inline-flex;align-items:center;gap:6px;background:rgba(0,245,155,0.12);border:1px solid #00f59b;color:#00f59b;padding:3px 8px;border-radius:10px;font-size:0.7rem;font-weight:700;margin-top:4px;">🛡️ Sentinel AI: Pruned Unnecessary Parts · ₹${Number(jc.customer_savings).toLocaleString()} Saved</div>` : ''}
+                            </div>
+                        </div>
+                        <span class="approval-badge badge-action-needed">Action Required</span>
+                    </div>
+                    <div class="approval-body-text">
+                        Our independent company diagnostic team has verified this issue directly to prevent shop inflation.
+                        Please review the approved work items and cost quotation below, then authorize service to begin repair.
+                    </div>
+                    <div class="approval-work-list">
+                        <div class="approval-work-title">Authorized Work Items:</div>
+                        <div>
+                            ${workItems.map(item => `<span class="work-item-pill">✓ ${item}</span>`).join('')}
+                        </div>
+                    </div>
+                    <div style="font-size:0.95rem; font-weight:600; color:var(--text-primary); margin-top:10px;">
+                        Estimated Total: <span style="color:var(--neon-blue); font-size:1.15rem; font-weight:700;">₹ ${(estData.total_min || 0).toLocaleString()} – ₹ ${(estData.total_max || 0).toLocaleString()}</span>
+                    </div>
+                    <div class="approval-actions">
+                        <button class="btn-approve" onclick="submitCustomerDecision('${jc.id}', 'approve', '${jc.vehicle_reg}')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="18"><polyline points="20 6 9 17 4 12"/></svg>
+                            Authorize & Approve Service
+                        </button>
+                        <button class="btn-decline" onclick="submitCustomerDecision('${jc.id}', 'decline', '${jc.vehicle_reg}')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                            Decline Service
+                        </button>
+                    </div>
+                    <div class="approval-auth-note">
+                        🔒 Authenticated for Vehicle Reg: <strong>${jc.vehicle_reg}</strong>. Mechanics and garage staff cannot modify this estimate.
+                    </div>
+                </div>`;
+            } else if (approvalStat === 'PENDING_COMPANY_REVIEW') {
+                approvalArea.innerHTML = `
+                <div class="approval-card status-pending-review">
+                    <div class="approval-header">
+                        <div class="approval-title-wrap">
+                            <span class="approval-icon">🔍</span>
+                            <div>
+                                <h3 class="approval-title">Independent Company Review in Progress</h3>
+                                <div class="approval-subtitle">Unbiased Diagnostic Workflow</div>
+                            </div>
+                        </div>
+                        <span class="approval-badge">Under Technical Review</span>
+                    </div>
+                    <div class="approval-body-text">
+                        To guarantee fair and honest service without garage bias, our company technical review team is actively inspecting the AI diagnostic findings for your vehicle. An official quotation will be presented here for your approval shortly.
+                    </div>
+                </div>`;
+            } else if (approvalStat === 'CUSTOMER_APPROVED') {
+                approvalArea.innerHTML = `
+                <div class="approval-card status-approved">
+                    <div class="approval-header">
+                        <div class="approval-title-wrap">
+                            <span class="approval-icon">✅</span>
+                            <div>
+                                <h3 class="approval-title">Service Authorized by Customer</h3>
+                                <div class="approval-subtitle">Approved Estimate · Repair in Progress</div>
+                            </div>
+                        </div>
+                        <span class="approval-badge" style="color:var(--success); border-color:var(--success);">Authorized</span>
+                    </div>
+                    <div class="approval-body-text" style="border-left-color:var(--success);">
+                        You have approved the repair estimate. A mechanic and bay have been assigned, and the repair procedure is underway according to company standards.
+                    </div>
+                </div>`;
+            } else if (approvalStat === 'CUSTOMER_DECLINED') {
+                approvalArea.innerHTML = `
+                <div class="approval-card status-declined">
+                    <div class="approval-header">
+                        <div class="approval-title-wrap">
+                            <span class="approval-icon">✕</span>
+                            <div>
+                                <h3 class="approval-title">Service Estimate Declined</h3>
+                                <div class="approval-subtitle">Closed Request</div>
+                            </div>
+                        </div>
+                        <span class="approval-badge" style="color:var(--danger); border-color:var(--danger);">Declined</span>
+                    </div>
+                    <div class="approval-body-text" style="border-left-color:var(--danger);">
+                        You declined the repair estimate. The service request has been closed without charge. Contact customer support if you need further assistance.
+                    </div>
+                </div>`;
+            } else {
+                approvalArea.innerHTML = '';
+            }
+        }
+
         // Timeline — use server-provided timeline with done/current states
         if (timeline && timeline.length > 0) {
             // Find the current step: last done step
@@ -262,3 +372,40 @@ function showToast(message, type = 'info') {
     container.appendChild(toast);
     setTimeout(() => toast.remove(), 4500);
 }
+
+// ━━━ Feature 2: Customer Estimate Decision Handler ━━━
+window.submitCustomerDecision = async function(jcId, decision, defaultReg) {
+    let identifier = defaultReg;
+    if (!identifier) {
+        identifier = prompt("Please confirm your Vehicle Registration Number or Owner Phone to authenticate:");
+        if (!identifier) return;
+    }
+
+    const confirmMsg = decision === 'approve'
+        ? "Authorize Repair Service?\n\nBy confirming, you authorize our garage to proceed with the independently verified repair items and parts."
+        : "Decline Service Estimate?\n\nBy declining, this service ticket will be cancelled and closed.";
+
+    if (!confirm(confirmMsg)) return;
+
+    try {
+        const res = await fetch(`${API_BASE}/customer/approval`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                jobcard_id: jcId,
+                decision: decision,
+                customer_identifier: identifier
+            })
+        });
+        const data = await res.json();
+        if (data.success) {
+            showToast(data.message, 'success');
+            // Refresh detail view
+            setTimeout(() => showDetail(jcId), 400);
+        } else {
+            showToast(data.message || 'Action failed', 'error');
+        }
+    } catch (e) {
+        showToast('Network error while processing your decision', 'error');
+    }
+};

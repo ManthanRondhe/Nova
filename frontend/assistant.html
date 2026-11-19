@@ -77,6 +77,11 @@
                 <span>Notifications</span>
                 <span class="badge" id="notif-badge"></span>
             </li>
+            <li data-page="auditor" onclick="window.location.href='/auditor/'" style="cursor:pointer;margin-top:8px;border-top:1px solid rgba(255,255,255,0.06);padding-top:10px;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#00f59b" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                <span style="color:#00f59b;font-weight:700;">Sentinel AI</span>
+                <span class="badge" style="background:rgba(0,245,155,0.18);color:#00f59b;border:1px solid #00f59b;">AI QA</span>
+            </li>
         </ul>
 
         <div class="sidebar-footer">
@@ -98,6 +103,10 @@
                 <div class="breadcrumb" id="breadcrumb">Dashboard</div>
             </div>
             <div class="top-right">
+                <a href="/auditor" class="portal-link" style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;background:rgba(0,245,155,0.08);border:1px solid rgba(0,245,155,0.3);color:#00f59b;font-size:0.75rem;font-weight:700;text-decoration:none;margin-right:12px;">
+                    <span style="width:7px;height:7px;border-radius:50%;background:#00f59b;box-shadow:0 0 8px #00f59b;"></span>
+                    <span>🛡️ Sentinel AI Auditor</span>
+                </a>
                 <div class="voice-status" id="voice-status">
                     <span class="status-text">Click mic to speak</span>
                 </div>

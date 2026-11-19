@@ -84,4 +84,32 @@ const api = {
     // Notifications
     getNotifications: () => api.request('/notifications'),
     getTelegramStatus: () => api.request('/telegram/status'),
+
+    // AI-Powered Visual Repair Guidance (Feature 1 replacement)
+    generateRepairGuide: (payload) => api.request('/generate-repair-guide', { method: 'POST', body: payload }),
+    getDiagnosisRepairGuide: (diagnosisId, make = '', model = '', year = '') =>
+        api.request(`/diagnosis/${encodeURIComponent(diagnosisId)}/repair-guide?vehicle_make=${encodeURIComponent(make)}&vehicle_model=${encodeURIComponent(model)}${year ? `&vehicle_year=${encodeURIComponent(year)}` : ''}`),
+    getRepairGuide: (faultName, make = '', model = '', year = '', system = '') =>
+        api.request(`/repair/guide?fault_name=${encodeURIComponent(faultName)}&vehicle_make=${encodeURIComponent(make)}&vehicle_model=${encodeURIComponent(model)}${year ? `&vehicle_year=${encodeURIComponent(year)}` : ''}&system=${encodeURIComponent(system)}`),
+
+    // Legacy Video Guides (redirected on backend)
+    getDiagnosisVideos: (diagnosisId) => api.request(`/diagnosis/${encodeURIComponent(diagnosisId)}/videos`),
+    getVideoGuide: (faultName, make = '', model = '') =>
+        api.request(`/videos/guide?fault_name=${encodeURIComponent(faultName)}&vehicle_make=${encodeURIComponent(make)}&vehicle_model=${encodeURIComponent(model)}`),
+
+    // Approvals (Feature 2)
+    submitCompanyReview: (jobcardId, action, reviewerId, token, note = '') =>
+        api.request('/approval/review', { method: 'POST', body: { jobcard_id: jobcardId, action, reviewer_id: reviewerId, token, note } }),
+    submitCustomerApproval: (jobcardId, decision, customerIdentifier) =>
+        api.request('/customer/approval', { method: 'POST', body: { jobcard_id: jobcardId, decision, customer_identifier: customerIdentifier } }),
+
+    // Sentinel AI Diagnostic Auditor (Feature 3)
+    getAuditorStatus: () => api.request('/auditor/status'),
+    getAuditorQueue: (filter) => api.request(`/auditor/queue${filter ? `?filter_verdict=${encodeURIComponent(filter)}` : ''}`),
+    getAuditorJobCard: (id) => api.request(`/auditor/jobcard/${encodeURIComponent(id)}`),
+    triggerJobCardAudit: (id, data) => api.request(`/auditor/audit/${encodeURIComponent(id)}`, { method: 'POST', body: data || {} }),
+    grantAIGreenFlag: (id, prune = true) => api.request(`/auditor/greenflag/${encodeURIComponent(id)}`, { method: 'POST', body: { prune_unnecessary: prune } }),
+    rejectOverreplacement: (id, reason) => api.request(`/auditor/reject/${encodeURIComponent(id)}`, { method: 'POST', body: { reason } }),
+    auditorChat: (message, jcId = '') => api.request('/auditor/chat', { method: 'POST', body: { message, jobcard_id: jcId } }),
+    evaluateSandbox: (data) => api.request('/auditor/evaluate', { method: 'POST', body: data }),
 };

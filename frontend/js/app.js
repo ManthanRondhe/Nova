@@ -137,11 +137,18 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             // Navigate based on action
-            const actionPageMap = { diagnosis: 'diagnosis', create_jobcard: 'jobcards', inventory: 'inventory', mechanics: 'mechanics', estimate: 'diagnosis', orders: 'dealers', pipeline: 'pipeline', dashboard: 'dashboard' };
+            const actionPageMap = { diagnosis: 'diagnosis', diagnosis_followup: 'diagnosis', create_jobcard: 'jobcards', inventory: 'inventory', mechanics: 'mechanics', estimate: 'diagnosis', orders: 'dealers', pipeline: 'pipeline', dashboard: 'dashboard' };
             if (actionPageMap[result.action]) navigateTo(actionPageMap[result.action]);
 
             // Populate data
-            if (result.action === 'diagnosis' && result.data?.results) renderDiagnosisResults(result.data.results, result.data.estimate);
+            if ((result.action === 'diagnosis' || result.action === 'diagnosis_followup') && result.data?.results) {
+                renderDiagnosisResults(
+                    result.data.results,
+                    result.data.estimate,
+                    result.data.repair_guide || result.data.video_guide,
+                    result.data.differential_question
+                );
+            }
         } catch (err) {
             addVoiceMessage('Sorry, I encountered an error. Please try again.', 'assistant');
             toast('Failed to process command', 'error');
@@ -222,23 +229,365 @@ document.addEventListener('DOMContentLoaded', () => {
             const vtype = $('#diag-vehicle-type').value;
             const vmodel = $('#diag-vehicle-model').value;
             const result = await api.diagnose(query, vtype, vmodel);
-            renderDiagnosisResults(result.results, result.top_estimate);
+            renderDiagnosisResults(
+                result.results,
+                result.top_estimate,
+                result.repair_guide || result.video_guide,
+                result.differential_question
+            );
             toast(`Found ${result.total_matches} potential faults`, 'success');
         } catch (err) { toast('Diagnosis failed', 'error'); }
         finally { $('#diagnose-btn').disabled = false; $('#diagnose-btn').innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>Run Diagnosis'; }
     });
 
-    function renderDiagnosisResults(results, estimate) {
+    function buildTechnicalPlaceholderSvg(label, faultName = '', stepNum = 1) {
+        const safeLabel = (label || 'Technical Component Schematic').replace(/"/g, "'").replace(/</g, '').slice(0, 48);
+        const safeFault = (faultName || 'Automotive Assembly').replace(/"/g, "'").replace(/</g, '').slice(0, 44);
+        const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="100%" height="100%">
+            <defs>
+                <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse">
+                    <path d="M 24 0 L 0 0 0 24" fill="none" stroke="rgba(0,229,255,0.07)" stroke-width="1"/>
+                </pattern>
+            </defs>
+            <rect width="640" height="360" fill="#050c1d"/>
+            <rect width="640" height="360" fill="url(#grid)"/>
+            <rect x="16" y="16" width="608" height="328" rx="8" fill="none" stroke="rgba(0,229,255,0.3)" stroke-width="1.5"/>
+            <rect x="16" y="16" width="608" height="34" rx="8" fill="rgba(0,229,255,0.09)"/>
+            <text x="30" y="37" fill="#00e5ff" font-family="monospace, sans-serif" font-size="11" font-weight="bold">STEP ${stepNum} CAD SCHEMATIC // MECHANICAL &amp; ELECTRICAL ASSEMBLY</text>
+            <text x="610" y="37" text-anchor="end" fill="#94a3b8" font-family="monospace" font-size="10">ILLUSTRATIVE BLUEPRINT</text>
+            <rect x="155" y="75" width="330" height="145" rx="8" fill="#0f2942" stroke="#00e5ff" stroke-width="2"/>
+            <circle cx="235" cy="147" r="34" fill="#060d1f" stroke="#38bdf8" stroke-width="2"/>
+            <circle cx="320" cy="147" r="34" fill="#060d1f" stroke="#00e5ff" stroke-width="2"/>
+            <circle cx="405" cy="147" r="34" fill="#060d1f" stroke="#38bdf8" stroke-width="2"/>
+            <line x1="185" y1="147" x2="455" y2="147" stroke="rgba(0,229,255,0.45)" stroke-width="2" stroke-dasharray="5,4"/>
+            <circle cx="235" cy="95" r="9" fill="#f59e0b"/><text x="235" y="99" text-anchor="middle" fill="#000" font-family="monospace" font-size="10" font-weight="bold">1</text>
+            <circle cx="320" cy="95" r="9" fill="#f59e0b"/><text x="320" y="99" text-anchor="middle" fill="#000" font-family="monospace" font-size="10" font-weight="bold">2</text>
+            <circle cx="405" cy="95" r="9" fill="#f59e0b"/><text x="405" y="99" text-anchor="middle" fill="#000" font-family="monospace" font-size="10" font-weight="bold">3</text>
+            <text x="320" y="242" text-anchor="middle" fill="#fde68a" font-family="monospace" font-size="11">[Inspect Fasteners, Seals, Clearances &amp; Electrical Terminals]</text>
+            <line x1="16" y1="268" x2="624" y2="268" stroke="rgba(0,229,255,0.2)" stroke-width="1"/>
+            <text x="32" y="292" fill="#e8edf8" font-family="monospace, sans-serif" font-size="14" font-weight="bold">${safeLabel}</text>
+            <text x="32" y="314" fill="#38bdf8" font-family="sans-serif" font-size="12">Target Assembly: ${safeFault}</text>
+            <text x="32" y="332" fill="#64748b" font-family="sans-serif" font-size="10">Illustrative CAD blueprint — Verify exact fastener layout in OEM factory manual</text>
+        </svg>`;
+        return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+    }
+
+    function openImageLightbox(src, title, source) {
+        let modal = document.getElementById('rg-lightbox-modal');
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.id = 'rg-lightbox-modal';
+            modal.className = 'rg-lightbox-overlay';
+            modal.onclick = (e) => {
+                if (e.target === modal || e.target.classList.contains('rg-lightbox-close')) {
+                    modal.classList.remove('active');
+                }
+            };
+            document.body.appendChild(modal);
+        }
+        modal.innerHTML = `
+            <div class="rg-lightbox-card">
+                <div class="rg-lightbox-header">
+                    <div class="rg-lightbox-title">${title || 'Technical Reference Diagram'}</div>
+                    <button type="button" class="rg-lightbox-close">&times;</button>
+                </div>
+                <div class="rg-lightbox-body">
+                    <img src="${src}" alt="${title || ''}" class="rg-lightbox-img" />
+                </div>
+                <div class="rg-lightbox-footer">
+                    <span>Source: ${source || 'Technical Reference'}</span>
+                    <span class="text-muted">Click outside or &times; to close</span>
+                </div>
+            </div>
+        `;
+        modal.classList.add('active');
+    }
+
+    function renderVisualRepairGuideHtml(guide, containerId = 'primary-repair-guide') {
+        if (!guide) return '';
+
+        const steps = guide.repair_steps || [];
+        if (!steps.length) return '';
+
+        const tools = guide.required_tools || [];
+        const safety = guide.safety_precautions || [];
+        const verification = guide.final_verification || [];
+        const difficulty = guide.difficulty || 'Intermediate';
+        const diffClass = difficulty.toLowerCase().includes('advanced') || difficulty.toLowerCase().includes('pro')
+            ? 'diff-hard' : difficulty.toLowerCase().includes('begin') ? 'diff-easy' : 'diff-med';
+        const sourceBadge = (guide.source_type || '').includes('llm') ? 'AI LLM Generated' : 'AI Technical Blueprint';
+
+        return `
+        <div class="repair-guide-container" id="${containerId}">
+            <div class="repair-guide-toggle" onclick="this.closest('.repair-guide-container').classList.toggle('collapsed')">
+                <div class="rg-toggle-title">
+                    <span class="rg-icon">&#128736;</span>
+                    <div>
+                        <div class="rg-kicker">AI-GENERATED REPAIR ASSISTANCE &bull; ${sourceBadge}</div>
+                        <div class="rg-main-heading">${guide.repair_title || 'Step-by-Step Visual Repair Guide'}</div>
+                    </div>
+                </div>
+                <div class="rg-header-badges">
+                    <span class="rg-difficulty-badge ${diffClass}">${difficulty}</span>
+                    ${guide.estimated_time ? `<span class="rg-time-badge">&#9201; ${guide.estimated_time}</span>` : ''}
+                    <span class="rg-chevron">&#9660;</span>
+                </div>
+            </div>
+
+            <div class="repair-guide-body">
+                <!-- Predicted Fault & Vehicle Context Banner -->
+                <div class="rg-summary-banner">
+                    <div class="rg-summary-main">
+                        <div class="rg-meta-pills">
+                            <div class="rg-fault-tag">
+                                <span class="rg-label">Predicted Fault (Possible):</span>
+                                <strong class="text-accent">${guide.predicted_fault || 'Vehicle Component Fault'}</strong>
+                            </div>
+                            <div class="rg-vehicle-tag">
+                                <span class="rg-label">Target Vehicle:</span>
+                                <strong>${guide.vehicle_context || 'Standard Vehicle (Verify OEM Specs)'}</strong>
+                            </div>
+                        </div>
+                        <p class="rg-explanation">${guide.fault_explanation || ''}</p>
+                    </div>
+
+                    <!-- Vehicle Specificity Customization -->
+                    <div class="rg-vehicle-customizer">
+                        <div class="rg-customizer-title">Vehicle-Specific Procedure Refinement</div>
+                        <div class="rg-customizer-inputs">
+                            <input type="text" class="rg-v-make" placeholder="Make (e.g. Maruti, Hyundai)" value="" />
+                            <input type="text" class="rg-v-model" placeholder="Model (e.g. Swift, Creta)" value="" />
+                            <input type="number" class="rg-v-year" placeholder="Year (e.g. 2022)" min="1990" max="2027" value="" />
+                            <button type="button" class="btn btn-primary btn-xs rg-tailor-btn"
+                                data-fault="${(guide.predicted_fault || '').replace(/"/g, '&quot;')}"
+                                data-container="${containerId}">
+                                Tailor Guide
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Required Tools & Safety Precautions Grid -->
+                <div class="rg-prereq-grid">
+                    <div class="rg-tools-box">
+                        <h4 class="rg-box-title">&#129520; Required Tools &amp; Test Instruments</h4>
+                        <div class="rg-tools-list">
+                            ${tools.length ? tools.map(t => `<span class="rg-tool-pill">${t}</span>`).join('') : '<span class="text-muted">Standard automotive hand tools</span>'}
+                        </div>
+                    </div>
+
+                    <div class="rg-safety-box">
+                        <h4 class="rg-box-title">&#9888;&#65039; Mandatory Safety Precautions</h4>
+                        <ul class="rg-safety-list">
+                            ${safety.length ? safety.map(s => `<li>${s}</li>`).join('') : '<li>Disconnect battery negative terminal and wear PPE before beginning work.</li>'}
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Step-by-Step Repair Cards -->
+                <div class="rg-steps-section-header">
+                    <h4>Step-by-Step Visual Repair Instructions (${steps.length} Chronological Steps)</h4>
+                    <span class="rg-steps-hint">Click any technical diagram to enlarge</span>
+                </div>
+                <div class="repair-stages-timeline">
+                    ${steps.map(st => {
+                        const placeholderUri = buildTechnicalPlaceholderSvg(st.title || st.image_search_query, guide.predicted_fault, st.step_number);
+                        const imgSrc = st.image_url || placeholderUri;
+                        const isPlaceholder = !st.image_url || String(st.image_url).startsWith('data:image/svg+xml');
+                        const safeTitle = (st.title || 'Repair step diagram').replace(/"/g, '&quot;');
+                        const safeSource = (st.image_source || 'Technical Reference').replace(/"/g, '&quot;');
+                        return `
+                        <div class="repair-stage-card visual-step-card">
+                            <div class="stage-timeline-bullet">${st.step_number}</div>
+                            <div class="stage-content">
+                                <div class="stage-header-row">
+                                    <h4 class="stage-title">${st.title}</h4>
+                                    <span class="stage-badge">Step ${st.step_number} of ${steps.length}</span>
+                                </div>
+                                <div class="visual-step-grid">
+                                    <div class="visual-step-details">
+                                        <p class="stage-desc">${st.instruction}</p>
+                                        ${st.warning ? `
+                                            <div class="rg-step-warning">
+                                                <strong>&#9888; Technician Caution:</strong> ${st.warning}
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                    <div class="visual-step-media">
+                                        <div class="rg-image-frame ${isPlaceholder ? 'is-placeholder' : ''}"
+                                             data-title="${safeTitle}"
+                                             data-source="${safeSource}">
+                                            <img src="${imgSrc}"
+                                                 alt="${safeTitle}"
+                                                 class="rg-step-image"
+                                                 loading="lazy"
+                                                 onerror="this.onerror=null; this.src='${placeholderUri}'; this.closest('.rg-image-frame').classList.add('is-placeholder');" />
+                                            <span class="rg-zoom-badge">&#128269; Inspect</span>
+                                        </div>
+                                        <div class="rg-image-meta">
+                                            <span class="rg-image-source">&#128247; ${st.image_source || 'Technical Reference'}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+                    }).join('')}
+                </div>
+
+                <!-- Final Verification Checklist -->
+                ${verification.length ? `
+                    <div class="rg-verification-box">
+                        <h4 class="rg-box-title">&#9989; Final Post-Repair Verification Checklist</h4>
+                        <div class="rg-verification-list">
+                            ${verification.map((v, idx) => `
+                                <label class="rg-check-item">
+                                    <input type="checkbox" class="rg-check-input" />
+                                    <span class="rg-check-text">${v}</span>
+                                </label>
+                            `).join('')}
+                        </div>
+                    </div>
+                ` : ''}
+
+                <!-- Engineering Disclaimer -->
+                <div class="rg-disclaimer">
+                    &#9432; <strong>Technical Notice:</strong> ${guide.disclaimer || 'Predicted faults are probable diagnoses based on reported symptoms. Always confirm physically and consult OEM service manuals for exact torque specifications.'}
+                </div>
+            </div>
+        </div>`;
+    }
+
+    function bindRepairGuideEvents() {
+        document.querySelectorAll('.rg-image-frame').forEach(frame => {
+            frame.onclick = () => {
+                const img = frame.querySelector('img');
+                if (img) {
+                    openImageLightbox(img.src, frame.dataset.title, frame.dataset.source);
+                }
+            };
+        });
+
+        document.querySelectorAll('.rg-tailor-btn').forEach(btn => {
+            btn.onclick = async () => {
+                const containerId = btn.dataset.container;
+                const container = document.getElementById(containerId);
+                if (!container) return;
+
+                const fault = btn.dataset.fault;
+                const make = container.querySelector('.rg-v-make')?.value.trim() || '';
+                const model = container.querySelector('.rg-v-model')?.value.trim() || '';
+                const yearVal = container.querySelector('.rg-v-year')?.value.trim() || '';
+                const year = yearVal ? parseInt(yearVal, 10) : null;
+
+                if (!make && !model && !year) {
+                    toast('Enter Vehicle Make, Model, or Year to tailor the guide', 'warning');
+                    return;
+                }
+
+                btn.disabled = true;
+                btn.textContent = 'Generating...';
+                try {
+                    const res = await api.generateRepairGuide({
+                        predicted_fault: fault,
+                        vehicle_make: make,
+                        vehicle_model: model,
+                        vehicle_year: year,
+                        symptoms: $('#diagnosis-input')?.value.trim() || ''
+                    });
+                    if (res.success && res.repair_guide) {
+                        container.outerHTML = renderVisualRepairGuideHtml(res.repair_guide, containerId);
+                        bindRepairGuideEvents();
+                        toast(`Repair guide tailored for ${[year, make, model].filter(Boolean).join(' ')}`, 'success');
+                    } else {
+                        toast(res.error || 'Could not generate tailored guide', 'error');
+                    }
+                } catch (err) {
+                    toast('Failed to tailor repair guide', 'error');
+                } finally {
+                    if (btn) {
+                        btn.disabled = false;
+                        btn.textContent = 'Tailor Guide';
+                    }
+                }
+            };
+        });
+
+        document.querySelectorAll('.load-alt-guide-btn').forEach(btn => {
+            btn.onclick = async () => {
+                const fault = btn.dataset.fault;
+                const proc = btn.dataset.proc || '';
+                const sys = btn.dataset.sys || '';
+                const targetId = btn.dataset.target;
+                const slot = document.getElementById(targetId);
+                if (!slot) return;
+
+                btn.disabled = true;
+                btn.textContent = 'Generating AI Visual Repair Guide...';
+                try {
+                    const vtype = $('#diag-vehicle-type')?.value || '';
+                    const vmodel = $('#diag-vehicle-model')?.value || '';
+                    const res = await api.generateRepairGuide({
+                        predicted_fault: fault,
+                        vehicle_make: vtype,
+                        vehicle_model: vmodel,
+                        fix_procedure: proc,
+                        system: sys,
+                        symptoms: $('#diagnosis-input')?.value.trim() || ''
+                    });
+                    if (res.success && res.repair_guide) {
+                        slot.innerHTML = renderVisualRepairGuideHtml(res.repair_guide, `rg-${targetId}`);
+                        bindRepairGuideEvents();
+                        btn.remove();
+                    } else {
+                        toast('Failed to generate repair guide', 'error');
+                        btn.disabled = false;
+                        btn.textContent = 'Generate AI Visual Repair Guide';
+                    }
+                } catch (err) {
+                    toast('Error generating repair guide', 'error');
+                    btn.disabled = false;
+                    btn.textContent = 'Generate AI Visual Repair Guide';
+                }
+            };
+        });
+    }
+
+    function renderDiagnosisResults(results, estimate, repairGuide, differentialQuestion = null) {
         if (!results || !results.length) {
             $('#diagnosis-results').innerHTML = '<div class="empty-state"><div class="empty-state-icon">&#128269;</div><div class="empty-state-text">No matching faults found. Try describing the symptoms differently.</div></div>';
             return;
         }
-        $('#diagnosis-results').innerHTML = results.map((r, i) => {
+
+        const top1 = results[0];
+        const top2 = results.length > 1 ? results[1] : null;
+        const followupBanner = differentialQuestion ? `
+            <div class="card" style="margin-bottom:16px;border:1px solid rgba(245,158,11,0.5);background:linear-gradient(135deg,rgba(245,158,11,0.12),rgba(0,229,255,0.05));padding:16px;border-radius:12px;">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+                    <span style="font-size:1.25rem;">&#129504;</span>
+                    <strong style="color:#fbbf24;font-size:0.95rem;letter-spacing:0.3px;">DIFFERENTIAL DIAGNOSTIC VERIFICATION REQUIRED</strong>
+                </div>
+                <p style="margin:0 0 12px 0;color:#e2e8f0;font-size:0.92rem;line-height:1.5;">${differentialQuestion}</p>
+                <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                    <button type="button" class="btn btn-primary btn-xs diff-quick-reply" data-reply="Yes, confirmed for ${top1.fault_name}">
+                        &#9989; Yes — Matches ${top1.fault_name}
+                    </button>
+                    ${top2 ? `
+                    <button type="button" class="btn btn-secondary btn-xs diff-quick-reply" data-reply="No, it matches ${top2.fault_name} (${(top2.confirming_keywords || '').split(',')[0] || top2.matched_symptom})">
+                        &#128260; No — Matches ${top2.fault_name}
+                    </button>` : ''}
+                </div>
+            </div>
+        ` : '';
+
+        $('#diagnosis-results').innerHTML = followupBanner + results.map((r, i) => {
             const confPct = Math.round((r.confidence || 0) * 100);
             const dashOffset = 188.5 - (188.5 * confPct / 100);
-            const confColor = confPct >= 80 ? 'var(--success)' : confPct >= 60 ? 'var(--warning)' : 'var(--danger)';
+            const confColor = confPct >= 78 ? 'var(--success)' : confPct >= 50 ? 'var(--warning)' : 'var(--danger)';
+            const isTop = i === 0;
+            const slotId = `repair-guide-slot-${i}`;
+
             return `
-            <div class="diagnosis-result ${i === 0 ? 'top-result' : ''}">
+            <div class="diagnosis-result ${isTop ? 'top-result' : ''}">
                 <div class="diag-header">
                     <div><div class="diag-fault-name">${r.fault_name}</div><div class="diag-system">${r.system} | ${r.vehicle_type} | ${r.severity}</div></div>
                     <div class="confidence-gauge">
@@ -254,9 +603,40 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="diag-detail"><span class="diag-detail-label">Common In</span><span class="diag-detail-value">${r.common_vehicles || 'Various'}</span></div>
                     <div class="diag-detail"><span class="diag-detail-label">Matched Symptom</span><span class="diag-detail-value text-muted">${r.matched_symptom || ''}</span></div>
                 </div>
-                ${r.fix_procedure ? `<div class="diag-fix"><div class="diag-fix-title">Repair Procedure</div><div class="diag-fix-text">${r.fix_procedure}</div></div>` : ''}
+                ${r.fix_procedure ? `<div class="diag-fix"><div class="diag-fix-title">Summary Repair Procedure</div><div class="diag-fix-text">${r.fix_procedure}</div></div>` : ''}
+                ${isTop && repairGuide ? renderVisualRepairGuideHtml(repairGuide, `primary-rg-${i}`) : `
+                    <div id="${slotId}" style="margin-top:12px;">
+                        <button type="button" class="btn btn-outline-cyan btn-xs load-alt-guide-btn"
+                            data-fault="${(r.fault_name || '').replace(/"/g, '&quot;')}"
+                            data-proc="${(r.fix_procedure || '').replace(/"/g, '&quot;')}"
+                            data-sys="${(r.system || '').replace(/"/g, '&quot;')}"
+                            data-target="${slotId}">
+                            &#128736; Generate AI Visual Repair Guide
+                        </button>
+                    </div>
+                `}
             </div>`;
         }).join('');
+
+        document.querySelectorAll('.diff-quick-reply').forEach(btn => {
+            btn.onclick = () => {
+                const reply = btn.dataset.reply;
+                if (!reply) return;
+                const currentQuery = $('#diagnosis-input')?.value.trim() || '';
+                if (currentQuery && chatContext.length === 0) {
+                    chatContext.push({ role: 'user', text: currentQuery });
+                    if (differentialQuestion) {
+                        chatContext.push({ role: 'assistant', text: differentialQuestion });
+                    }
+                }
+                voicePanel.classList.remove('hidden');
+                voicePanel.classList.add('visible');
+                addVoiceMessage(reply, 'user');
+                processVoiceCommand(reply);
+            };
+        });
+
+        bindRepairGuideEvents();
     }
 
     // ━━━ JOB CARDS ━━━

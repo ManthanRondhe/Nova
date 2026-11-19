@@ -15,7 +15,11 @@ class JobCardManager:
             "owner_name","owner_phone","complaint","diagnosis_fault","diagnosis_confidence",
             "assigned_mechanic_id","assigned_mechanic_name","status","required_parts",
             "estimated_time","estimated_cost","actual_cost","priority","bay_number",
-            "created_at","updated_at","completed_at"
+            "created_at","updated_at","completed_at",
+            # Approval Workflow Fields (Feature 2)
+            "approval_status","review_token","review_requested_at","expires_at",
+            "audit_log","estimate","reviewed_by","review_note",
+            "customer_estimate","customer_decision","customer_decided_at"
         ]
     
     def _read_all(self):

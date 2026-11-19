@@ -8,7 +8,7 @@ import csv, os, random
 
 DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 os.makedirs(DATA_DIR, exist_ok=True)
-
+ 
 FAULT_HEADERS = ["fault_id","vehicle_type","system","symptom","fault_name","obd_code",
     "confidence","severity","required_parts","estimated_time_hours",
     "estimated_cost_range","fix_procedure","common_vehicles"]

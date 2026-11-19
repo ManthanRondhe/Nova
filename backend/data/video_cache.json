@@ -1,0 +1,319 @@
+{
+  "toyota_corolla_alternator_diode_failure_electrical": {
+    "cache_key": "toyota_corolla_alternator_diode_failure_electrical",
+    "cached_at": "2026-11-13T12:42:55.535946+00:00",
+    "guide": {
+      "fault_name": "Alternator diode failure",
+      "vehicle": "Toyota Corolla",
+      "total_stages": 5,
+      "generated_at": "2026-11-13T12:42:55.535933+00:00",
+      "has_videos": false,
+      "stages": [
+        {
+          "stage_number": 1,
+          "stage_title": "Charging System Diagnostic",
+          "description": "Measure resting battery voltage and running voltage with loads (headlights, AC) applied.",
+          "search_query": "Toyota Corolla Alternator diode failure diagnose charging system test multimeter",
+          "fallback_search_url": "https://www.youtube.com/results?search_query=Toyota+Corolla+Alternator+diode+failure+diagnose+charging+system+test+multimeter",
+          "is_fallback": true,
+          "videos": []
+        },
+        {
+          "stage_number": 2,
+          "stage_title": "Safety Prep & Battery Disconnect",
+          "description": "Disconnect negative terminal to prevent alternator B+ terminal shorting against engine metal.",
+          "search_query": "Toyota Corolla Alternator diode failure safety disconnect battery",
+          "fallback_search_url": "https://www.youtube.com/results?search_query=Toyota+Corolla+Alternator+diode+failure+safety+disconnect+battery",
+          "is_fallback": true,
+          "videos": []
+        },
+        {
+          "stage_number": 3,
+          "stage_title": "Serpentine Belt Removal & Unbolting",
+          "description": "Relieve belt tensioner tension, slip off serpentine belt, disconnect electrical harness, and remove bolts.",
+          "search_query": "Toyota Corolla Alternator diode failure remove serpentine belt unbolt alternator",
+          "fallback_search_url": "https://www.youtube.com/results?search_query=Toyota+Corolla+Alternator+diode+failure+remove+serpentine+belt+unbolt+alternator",
+          "is_fallback": true,
+          "videos": []
+        },
+        {
+          "stage_number": 4,
+          "stage_title": "Alternator Replacement & Belt Routing",
+          "description": "Mount new alternator, torque bolts, reconnect harness, and route belt strictly according to diagram.",
+          "search_query": "Toyota Corolla Alternator diode failure install new alternator belt routing",
+          "fallback_search_url": "https://www.youtube.com/results?search_query=Toyota+Corolla+Alternator+diode+failure+install+new+alternator+belt+routing",
+          "is_fallback": true,
+          "videos": []
+        },
+        {
+          "stage_number": 5,
+          "stage_title": "Output Voltage Verification",
+          "description": "Start engine and ensure alternator generates 13.8V - 14.5V under full vehicle accessory load.",
+          "search_query": "Toyota Corolla Alternator diode failure test charging voltage test output",
+          "fallback_search_url": "https://www.youtube.com/results?search_query=Toyota+Corolla+Alternator+diode+failure+test+charging+voltage+test+output",
+          "is_fallback": true,
+          "videos": []
+        }
+      ]
+    }
+  },
+  "_brake_squeal_none": {
+    "cache_key": "_brake_squeal_none",
+    "cached_at": "2026-11-13T12:42:55.545712+00:00",
+    "guide": {
+      "fault_name": "Brake squeal",
+      "vehicle": "Standard Vehicle",
+      "total_stages": 6,
+      "generated_at": "2026-11-13T12:42:55.545705+00:00",
+      "has_videos": false,
+      "stages": [
+        {
+          "stage_number": 1,
+          "stage_title": "Inspection & Safety Lift",
+          "description": "Loosen lug nuts slightly, jack vehicle on level concrete, secure jack stands, and remove wheels.",
+          "search_query": "Brake squeal jack up remove wheel brake inspection",
+          "fallback_search_url": "https://www.youtube.com/results?search_query=Brake+squeal+jack+up+remove+wheel+brake+inspection",
+          "is_fallback": true,
+          "videos": []
+        },
+        {
+          "stage_number": 2,
+          "stage_title": "Caliper Removal & Support",
+          "description": "Unbolt guide slider pins, pry caliper off rotor, and hang caliper with S-hook to protect the brake line.",
+          "search_query": "Brake squeal remove caliper slider pin hang hanger",
+          "fallback_search_url": "https://www.youtube.com/results?search_query=Brake+squeal+remove+caliper+slider+pin+hang+hanger",
+          "is_fallback": true,
+          "videos": []
+        },
+        {
+          "stage_number": 3,
+          "stage_title": "Rotor Inspection / Replacement & Bracket Cleaning",
+          "description": "Remove caliper bracket, take off old rotor, clean wheel hub face with wire brush, and install new rotor.",
+          "search_query": "Brake squeal remove rotor clean hub caliper bracket",
+          "fallback_search_url": "https://www.youtube.com/results?search_query=Brake+squeal+remove+rotor+clean+hub+caliper+bracket",
+          "is_fallback": true,
+          "videos": []
+        },
+        {
+          "stage_number": 4,
+          "stage_title": "Piston Retraction & Pad Lubrication",
+          "description": "Compress caliper piston with caliper tool, clean abutment clips, apply synthetic brake grease to slide points.",
+          "search_query": "Brake squeal compress caliper piston lubricate brake hardware",
+          "fallback_search_url": "https://www.youtube.com/results?search_query=Brake+squeal+compress+caliper+piston+lubricate+brake+hardware",
+          "is_fallback": true,
+          "videos": []
+        },
+        {
+          "stage_number": 5,
+          "stage_title": "Reassembly & Wheel Torque",
+          "description": "Reinstall caliper, torque slider pins, mount wheel, hand tighten lugs, lower vehicle, and torque to factory spec.",
+          "search_query": "Brake squeal torque caliper bolts wheel lug nut torque",
+          "fallback_search_url": "https://www.youtube.com/results?search_query=Brake+squeal+torque+caliper+bolts+wheel+lug+nut+torque",
+          "is_fallback": true,
+          "videos": []
+        },
+        {
+          "stage_number": 6,
+          "stage_title": "Brake Pedal Pumping & Bedding-In Procedure",
+          "description": "Pump brake pedal several times until firm BEFORE shifting into drive, and perform pad bedding-in road test.",
+          "search_query": "Brake squeal pump brake pedal bedding in procedure test drive",
+          "fallback_search_url": "https://www.youtube.com/results?search_query=Brake+squeal+pump+brake+pedal+bedding+in+procedure+test+drive",
+          "is_fallback": true,
+          "videos": []
+        }
+      ]
+    }
+  },
+  "car_starter_motor_failure_engine": {
+    "cache_key": "car_starter_motor_failure_engine",
+    "cached_at": "2026-10-14T08:34:33.969244+00:00",
+    "guide": {
+      "fault_name": "Starter Motor Failure",
+      "vehicle": "Car",
+      "total_stages": 6,
+      "generated_at": "2026-10-14T08:34:33.969227+00:00",
+      "has_videos": false,
+      "stages": [
+        {
+          "stage_number": 1,
+          "stage_title": "Diagnosing & Voltage Drop Testing",
+          "description": "Test battery voltage, starter relay, and starter solenoid with a multimeter before removal.",
+          "search_query": "Car Starter Motor Failure diagnose test voltage drop multimeter",
+          "fallback_search_url": "https://www.youtube.com/results?search_query=Car+Starter+Motor+Failure+diagnose+test+voltage+drop+multimeter",
+          "is_fallback": true,
+          "videos": []
+        },
+        {
+          "stage_number": 2,
+          "stage_title": "Battery Disconnect & Safety Prep",
+          "description": "Disconnect negative battery terminal, raise and support vehicle on rated jack stands.",
+          "search_query": "Car Starter Motor Failure disconnect battery jack stands safety",
+          "fallback_search_url": "https://www.youtube.com/results?search_query=Car+Starter+Motor+Failure+disconnect+battery+jack+stands+safety",
+          "is_fallback": true,
+          "videos": []
+        },
+        {
+          "stage_number": 3,
+          "stage_title": "Wiring Disconnection & Starter Removal",
+          "description": "Disconnect the solenoid B-terminal and S-terminal wiring, unbolt mounting bolts, and withdraw starter.",
+          "search_query": "Car Starter Motor Failure remove starter motor bolts wiring harness",
+          "fallback_search_url": "https://www.youtube.com/results?search_query=Car+Starter+Motor+Failure+remove+starter+motor+bolts+wiring+harness",
+          "is_fallback": true,
+          "videos": []
+        },
+        {
+          "stage_number": 4,
+          "stage_title": "Bench Inspection & New Starter Prep",
+          "description": "Compare pinions, gear teeth, and bolt spacing between the old and replacement starter.",
+          "search_query": "Car Starter Motor Failure bench test inspect starter replacement comparison",
+          "fallback_search_url": "https://www.youtube.com/results?search_query=Car+Starter+Motor+Failure+bench+test+inspect+starter+replacement+comparison",
+          "is_fallback": true,
+          "videos": []
+        },
+        {
+          "stage_number": 5,
+          "stage_title": "Reinstallation & Torque",
+          "description": "Position new starter, hand-thread bolts to prevent cross-threading, torque to spec, and reconnect terminals.",
+          "search_query": "Car Starter Motor Failure install new starter motor torque spec wiring",
+          "fallback_search_url": "https://www.youtube.com/results?search_query=Car+Starter+Motor+Failure+install+new+starter+motor+torque+spec+wiring",
+          "is_fallback": true,
+          "videos": []
+        },
+        {
+          "stage_number": 6,
+          "stage_title": "Testing After Install & Cranking Verification",
+          "description": "Reconnect battery, crank engine, verify smooth engagement, and test alternator recharge voltage.",
+          "search_query": "Car Starter Motor Failure cranking test start verification",
+          "fallback_search_url": "https://www.youtube.com/results?search_query=Car+Starter+Motor+Failure+cranking+test+start+verification",
+          "is_fallback": true,
+          "videos": []
+        }
+      ]
+    }
+  },
+  "honda_civic_diag-test_none": {
+    "cache_key": "honda_civic_diag-test_none",
+    "cached_at": "2026-10-14T08:34:33.974726+00:00",
+    "guide": {
+      "fault_name": "diag-test",
+      "vehicle": "Honda Civic",
+      "total_stages": 5,
+      "generated_at": "2026-10-14T08:34:33.974714+00:00",
+      "has_videos": false,
+      "stages": [
+        {
+          "stage_number": 1,
+          "stage_title": "Initial Diagnosis & Safety Preparation",
+          "description": "Perform visual inspection and safety precautions for diag-test.",
+          "search_query": "Honda Civic diag-test diagnosis inspection safety preparation",
+          "fallback_search_url": "https://www.youtube.com/results?search_query=Honda+Civic+diag-test+diagnosis+inspection+safety+preparation",
+          "is_fallback": true,
+          "videos": []
+        },
+        {
+          "stage_number": 2,
+          "stage_title": "Disassembly & Accessing Faulty Components",
+          "description": "Remove protective covers and surrounding parts to reach diag-test.",
+          "search_query": "Honda Civic diag-test removal disassembly step by step",
+          "fallback_search_url": "https://www.youtube.com/results?search_query=Honda+Civic+diag-test+removal+disassembly+step+by+step",
+          "is_fallback": true,
+          "videos": []
+        },
+        {
+          "stage_number": 3,
+          "stage_title": "Component Replacement / Repair",
+          "description": "Inspect, replace, or repair the damaged parts as specified in technical procedures.",
+          "search_query": "Honda Civic diag-test replace install new part procedure",
+          "fallback_search_url": "https://www.youtube.com/results?search_query=Honda+Civic+diag-test+replace+install+new+part+procedure",
+          "is_fallback": true,
+          "videos": []
+        },
+        {
+          "stage_number": 4,
+          "stage_title": "Reassembly & Quality Calibration",
+          "description": "Reassemble all components, torque to factory specifications, and replenish fluids if needed.",
+          "search_query": "Honda Civic diag-test reassembly torque specs installation",
+          "fallback_search_url": "https://www.youtube.com/results?search_query=Honda+Civic+diag-test+reassembly+torque+specs+installation",
+          "is_fallback": true,
+          "videos": []
+        },
+        {
+          "stage_number": 5,
+          "stage_title": "Post-Repair Testing & Road Verification",
+          "description": "Test operation to ensure diag-test is resolved without warning lights or abnormal noises.",
+          "search_query": "Honda Civic diag-test testing verification test drive",
+          "fallback_search_url": "https://www.youtube.com/results?search_query=Honda+Civic+diag-test+testing+verification+test+drive",
+          "is_fallback": true,
+          "videos": []
+        }
+      ]
+    }
+  },
+  "_starter_motor_failure_engine": {
+    "cache_key": "_starter_motor_failure_engine",
+    "cached_at": "2026-10-14T08:35:59.169770+00:00",
+    "guide": {
+      "fault_name": "Starter Motor Failure",
+      "vehicle": "Standard Vehicle",
+      "total_stages": 6,
+      "generated_at": "2026-10-14T08:35:59.169744+00:00",
+      "has_videos": false,
+      "stages": [
+        {
+          "stage_number": 1,
+          "stage_title": "Diagnosing & Voltage Drop Testing",
+          "description": "Test battery voltage, starter relay, and starter solenoid with a multimeter before removal.",
+          "search_query": "Starter Motor Failure diagnose test voltage drop multimeter",
+          "fallback_search_url": "https://www.youtube.com/results?search_query=Starter+Motor+Failure+diagnose+test+voltage+drop+multimeter",
+          "is_fallback": true,
+          "videos": []
+        },
+        {
+          "stage_number": 2,
+          "stage_title": "Battery Disconnect & Safety Prep",
+          "description": "Disconnect negative battery terminal, raise and support vehicle on rated jack stands.",
+          "search_query": "Starter Motor Failure disconnect battery jack stands safety",
+          "fallback_search_url": "https://www.youtube.com/results?search_query=Starter+Motor+Failure+disconnect+battery+jack+stands+safety",
+          "is_fallback": true,
+          "videos": []
+        },
+        {
+          "stage_number": 3,
+          "stage_title": "Wiring Disconnection & Starter Removal",
+          "description": "Disconnect the solenoid B-terminal and S-terminal wiring, unbolt mounting bolts, and withdraw starter.",
+          "search_query": "Starter Motor Failure remove starter motor bolts wiring harness",
+          "fallback_search_url": "https://www.youtube.com/results?search_query=Starter+Motor+Failure+remove+starter+motor+bolts+wiring+harness",
+          "is_fallback": true,
+          "videos": []
+        },
+        {
+          "stage_number": 4,
+          "stage_title": "Bench Inspection & New Starter Prep",
+          "description": "Compare pinions, gear teeth, and bolt spacing between the old and replacement starter.",
+          "search_query": "Starter Motor Failure bench test inspect starter replacement comparison",
+          "fallback_search_url": "https://www.youtube.com/results?search_query=Starter+Motor+Failure+bench+test+inspect+starter+replacement+comparison",
+          "is_fallback": true,
+          "videos": []
+        },
+        {
+          "stage_number": 5,
+          "stage_title": "Reinstallation & Torque",
+          "description": "Position new starter, hand-thread bolts to prevent cross-threading, torque to spec, and reconnect terminals.",
+          "search_query": "Starter Motor Failure install new starter motor torque spec wiring",
+          "fallback_search_url": "https://www.youtube.com/results?search_query=Starter+Motor+Failure+install+new+starter+motor+torque+spec+wiring",
+          "is_fallback": true,
+          "videos": []
+        },
+        {
+          "stage_number": 6,
+          "stage_title": "Testing After Install & Cranking Verification",
+          "description": "Reconnect battery, crank engine, verify smooth engagement, and test alternator recharge voltage.",
+          "search_query": "Starter Motor Failure cranking test start verification",
+          "fallback_search_url": "https://www.youtube.com/results?search_query=Starter+Motor+Failure+cranking+test+start+verification",
+          "is_fallback": true,
+          "videos": []
+        }
+      ]
+    }
+  }
+}
