@@ -47,4 +47,3 @@ logs/
 # Test artifacts
 scratch_test.py
 backend/test_api.py
-*.joblib

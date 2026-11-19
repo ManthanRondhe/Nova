@@ -18,7 +18,7 @@ import pandas as pd
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
-from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import SGDClassifier
 from sklearn.svm import LinearSVC
 from sklearn.pipeline import FeatureUnion
 from rapidfuzz import fuzz
@@ -125,11 +125,16 @@ class DiagnosisEngine:
         merged_path = os.path.join(data_dir, "merged_internet_faults.csv")
         local_path = os.path.join(data_dir, "vehicle_faults.csv")
 
-        self.merged_df = pd.read_csv(merged_path)
+        # Load only unique (symptom, fault_name) pairs from merged_internet_faults.csv
+        # to avoid holding 59,981 duplicate DataFrame rows in RAM (critical for Render 512MB limit)
+        merged_raw = pd.read_csv(merged_path, usecols=["symptom", "fault_name", "obd_code", "system", "vehicle_type", "severity", "followup_question"])
+        self.merged_df = merged_raw.drop_duplicates(subset=["symptom", "fault_name"]).reset_index(drop=True)
+        del merged_raw
+
         self.local_df = pd.read_csv(local_path)
         self.df = self.local_df
 
-        print(f"[*] Loaded {len(self.merged_df)} rows from merged internet datasets (Kaggle + HuggingFace)")
+        print(f"[*] Loaded {len(self.merged_df)} unique rows from merged internet datasets (Kaggle + HuggingFace)")
         print(f"[*] Loaded {len(self.local_df)} rows from local enrichment database")
 
         # Build canonical fault metadata table and symptom index
@@ -199,7 +204,7 @@ class DiagnosisEngine:
         print(f"[*] Compressed {len(self.local_df) + len(self.merged_df)} records into {len(X_train)} unique training patterns across {len(valid_faults)} canonical faults.")
 
         # Check persistent model cache (invalidates automatically if training data changes)
-        data_hash = hashlib.md5(f"{len(X_train)}_{X_train[0]}_{X_train[-1]}".encode()).hexdigest()[:12]
+        data_hash = hashlib.md5(f"v3_{len(X_train)}_{X_train[0]}_{X_train[-1]}".encode()).hexdigest()[:12]
         cache_path = os.path.join(data_dir, f"trained_ensemble_{data_hash}.joblib")
         tmp_cache_path = os.path.join("/tmp", f"trained_ensemble_{data_hash}.joblib") if os.path.exists("/tmp") else cache_path
 
@@ -223,31 +228,33 @@ class DiagnosisEngine:
             print("[*] Training Custom Hybrid ML Ensemble (Word+Char TF-IDF + LinearSVC + LogisticRegression + MultinomialNB)...")
             self.vectorizer = FeatureUnion([
                 ("word_tfidf", TfidfVectorizer(
-                    ngram_range=(1, 3),
-                    max_features=16000,
+                    ngram_range=(1, 2),
+                    max_features=7000,
                     sublinear_tf=True,
-                    min_df=1
+                    min_df=1,
+                    dtype=np.float32
                 )),
                 ("char_tfidf", TfidfVectorizer(
                     analyzer="char_wb",
-                    ngram_range=(3, 5),
-                    max_features=16000,
+                    ngram_range=(3, 4),
+                    max_features=7000,
                     sublinear_tf=True,
-                    min_df=2
+                    min_df=2,
+                    dtype=np.float32
                 ))
             ])
 
             X_vec = self.vectorizer.fit_transform(X_train)
 
-            # Fast LinearSVC + Softmax Temperature Calibration on decision_function (trains in ~0.4s!)
+            # Fast LinearSVC + Softmax Temperature Calibration on decision_function (trains in ~0.3s, <15MB RAM)
             self.clf_svc = LinearSVC(C=1.5, class_weight="balanced", random_state=42)
             self.clf_svc.fit(X_vec, y_train)
 
-            # Fast Logistic Regression (lbfgs, trains in ~1.2s)
-            self.clf_lr = LogisticRegression(C=6.0, max_iter=300, random_state=42)
+            # Fast Stochastic Gradient Descent Logistic Loss (trains in ~0.25s, <10MB RAM vs 850MB for lbfgs!)
+            self.clf_lr = SGDClassifier(loss="log_loss", alpha=1e-5, max_iter=40, random_state=42)
             self.clf_lr.fit(X_vec, y_train)
 
-            # Fast Multinomial Naive Bayes (trains in ~0.02s)
+            # Fast Multinomial Naive Bayes (trains in ~0.01s)
             self.clf_nb = MultinomialNB(alpha=0.08)
             self.clf_nb.fit(X_vec, y_train)
 
@@ -261,11 +268,11 @@ class DiagnosisEngine:
                 "classes_": self.classes_,
             }
             try:
-                joblib.dump(bundle, cache_path)
+                joblib.dump(bundle, cache_path, compress=3)
                 print(f"[OK] Saved trained ML Ensemble to {cache_path}")
             except Exception:
                 try:
-                    joblib.dump(bundle, tmp_cache_path)
+                    joblib.dump(bundle, tmp_cache_path, compress=3)
                     print(f"[OK] Saved trained ML Ensemble to {tmp_cache_path}")
                 except Exception as e:
                     print(f"[!] Could not cache model: {e}")
